@@ -34,6 +34,10 @@
 
 		# Note-taking
 		xournalpp
+
+		# Media
+		imv
+		mpv
 	];
 
 	home.stateVersion = "25.05";
