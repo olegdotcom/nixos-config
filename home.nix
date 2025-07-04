@@ -51,8 +51,8 @@
 			$terminal = foot
 			$launcher = anyrun
 
-			# Set monitor
-			monitor=,preferred,auto,1
+			# Set monitor and scaling for HiDPI
+			monitor=,preferred,auto,2
 
 			# Autostart
 			# exec-once = waybar &
@@ -123,17 +123,16 @@
 
 		"foot/foot.ini".text = ''
 			# Minimal foot terminal config
-			font=monospace:size=11
+			font=monospace:size=18
 			term=xterm-256color
 		'';
 
 		"anyrun/config.ron".text = ''
 			Config(
 				plugins: [
-					"libapplications.so", // .desktop file support
-					"librink.so",         // Calculator
-				],
-				max_entries: 5,
+					"libapplications.so",
+					"librink.so",
+				]
 			)
 		'';
 
