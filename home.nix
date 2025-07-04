@@ -250,6 +250,35 @@
 			#pulseaudio, #network, #clock {
 					padding: 0 10px;
 			}
+
+			#battery {
+					padding: 0 10px;
+					color: #eceff4;
+			}
+
+			#battery.charging {
+					color: #a3be8c;
+			}
+
+			#battery.warning {
+					color: #ebcb8b;
+			}
+
+			#battery.critical {
+					color: #bf616a;
+					animation-name: blink;
+					animation-duration: 0.5s;
+					animation-timing-function: linear;
+					animation-iteration-count: infinite;
+					animation-direction: alternate;
+			}
+
+			@keyframes blink {
+					to {
+							background-color: #bf616a;
+							color: #eceff4;
+					}
+			}
 		'';
 	};
 }
