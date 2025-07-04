@@ -95,11 +95,6 @@
     };
   };
 
-  # Required for greetd to function correctly
-  environment.systemPackages = with pkgs; [
-    greetd.wlgreet
-  ];
-
   # Set environment variables for greetd
   environment.etc."greetd/environments".text = ''
     Hyprland
