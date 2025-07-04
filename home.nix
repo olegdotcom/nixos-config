@@ -130,7 +130,7 @@
 
 		"foot/foot.ini".text = ''
 			# Minimal foot terminal config
-			font=monospace:size=14
+			font=SauceCodePro Nerd Font:size=14
 			term=xterm-256color
 		'';
 
