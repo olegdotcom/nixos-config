@@ -63,14 +63,14 @@
 
   programs.hyprland = {
   	enable = true;
-	xwayland.enable = true;
+    xwayland.enable = true;
   };
 
   fonts.packages = with pkgs; [
   	noto-fonts
-	noto-fonts-cjk-sans
-	noto-fonts-emoji
-  nerd-fonts.sauce-code-pro
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+    nerd-fonts.sauce-code-pro
   ];
 
   environment.sessionVariables = {
