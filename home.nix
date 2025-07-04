@@ -20,7 +20,6 @@
 		anyrun
 		waybar
 		pavucontrol # Volume control for waybar
-		network-manager-applet # GUI for managing network connections
 
 		# archives
 		zip
