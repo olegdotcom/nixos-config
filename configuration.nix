@@ -40,12 +40,7 @@
 
   # Set keyboard layout and map Caps Lock to Escape system-wide.
   # This is respected by both the console and Wayland/X11.
-  console = {
-    useXkbConfig = true;
-    # Set a larger font for the TTY console to simulate scaling on HiDPI displays.
-    font = "ter-v32n";
-    packages = [ pkgs.terminus_font ];
-  };
+  console.useXkbConfig = true;
   services.xserver.layout = "us";
   services.xserver.xkbOptions = "caps:escape";
 
