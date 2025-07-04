@@ -70,7 +70,7 @@
   	noto-fonts
 	noto-fonts-cjk-sans
 	noto-fonts-emoji
-  nerd-fonts.source-code-pro
+  nerd-fonts.sauce-code-pro
   ];
 
   environment.sessionVariables = {
