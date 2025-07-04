@@ -123,7 +123,7 @@
 
 		"foot/foot.ini".text = ''
 			# Minimal foot terminal config
-			font=monospace:size=18
+			font=monospace:size=14
 			term=xterm-256color
 		'';
 
