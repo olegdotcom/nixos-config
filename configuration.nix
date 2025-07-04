@@ -10,6 +10,9 @@
       ./hardware-configuration.nix
     ];
 
+  # Enable firmware updates for hardware.
+  hardware.enableRedistributableFirmware = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -19,6 +22,9 @@
 
   # Firmware updater.
   services.fwupd.enable = true;
+
+  # For power management on laptops.
+  services.tlp.enable = true;
 
   networking.hostName = "oleg-laptop";
   networking.networkmanager.enable = true;
@@ -47,17 +53,16 @@
     pulse.enable = true;
   };
 
+  hardware.bluetooth.enable = true;
+
   hardware.graphics = {
   	enable = true;
   };
   services.xserver.videoDrivers = [ "amdgpu" ];
-  nixpkgs.config.packageOverrides = pkgs: {
-  	vaapiVdpau = pkgs.vaapiVdpau.override { enableX11 = false; };
-  };
 
   programs.hyprland = {
   	enable = true;
-	xwayland.enable = false;
+	xwayland.enable = true;
   };
 
   fonts.packages = with pkgs; [
@@ -134,4 +139,3 @@
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-

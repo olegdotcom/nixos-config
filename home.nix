@@ -11,6 +11,7 @@
 		fzf
 		which
 		pkgs.gh
+		libva-utils # For checking hardware video acceleration (vainfo)
 
 		# archives
 		zip
