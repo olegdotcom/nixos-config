@@ -89,7 +89,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.wlgreet}/bin/wlgreet --command Hyprland";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd Hyprland";
         user = "greeter";
       };
     };
@@ -120,7 +120,7 @@
     git
     wayland
     xdg-desktop-portal-hyprland
-    greetd.wlgreet
+    greetd.tuigreet
   ];
   environment.variables.EDITOR = "nvim";
 
