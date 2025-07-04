@@ -23,6 +23,9 @@
 		networkmanagerapplet
 		dconf
 
+		# CLI Tools
+		gemini-cli
+
 		# archives
 		zip
 		xz
