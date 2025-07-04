@@ -20,6 +20,7 @@
 		anyrun
 		waybar
 		pavucontrol # Volume control for waybar
+		networkmanagerapplet
 
 		# archives
 		zip
@@ -189,12 +190,23 @@
 				"height": 35,
 				"modules-left": ["hyprland/workspaces"],
 				"modules-center": [],
-				"modules-right": ["pipewire", "network", "clock"],
+				"modules-right": ["battery", "pipewire", "network", "clock"],
 				"hyprland/workspaces": {
 						"disable-scroll": true,
 						"all-outputs": true,
 						"format": "{name}",
 						"on-click": "activate"
+				},
+				"battery": {
+						"states": {
+								"warning": 30,
+								"critical": 15
+						},
+						"format": "{capacity}% {icon}",
+						"format-charging": "{capacity}% ",
+						"format-plugged": "{capacity}% ",
+						"format-alt": "{time} {icon}",
+						"icons": ["", "", "", "", ""]
 				},
 				"pipewire": {
 						"format": "{volume}% {icon}",
@@ -222,7 +234,7 @@
 			* {
 					border: none;
 					border-radius: 0;
-					font-family: "SauceCodePro Nerd Font";
+					font-family: "SauceCodePro Nerd Font", monospace;
 					font-size: 16px;
 					min-height: 0;
 			}
