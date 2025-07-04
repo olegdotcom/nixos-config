@@ -41,8 +41,8 @@
   # Set keyboard layout and map Caps Lock to Escape system-wide.
   # This is respected by both the console and Wayland/X11.
   console.useXkbConfig = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "caps:escape";
+  services.xserver.xkb.layout = "us";
+  services.xserver.xkb.options = "caps:escape";
 
   # Enable sound.
   services.pulseaudio.enable = false;
