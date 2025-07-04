@@ -84,6 +84,12 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
+  # Enable greetd, a minimal and flexible login manager, with the wlgreet greeter.
+  services.greetd = {
+    enable = true;
+    wayland.enable = true;
+  };
+
   users.users.oleg = {
     isNormalUser = true;
     home = "/home/oleg";
