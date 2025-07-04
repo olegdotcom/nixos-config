@@ -97,6 +97,8 @@
     networkmanager
     wget
     git
+    wayland
+    xdg-desktop-portal-hyprland
   ];
   environment.variables.EDITOR = "nvim";
 
