@@ -30,6 +30,9 @@
 		xz
 		unzip
 		p7zip
+
+		# Note-taking
+		xournalpp
 	];
 
 	home.stateVersion = "25.05";
