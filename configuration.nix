@@ -87,12 +87,18 @@
   # Enable greetd, a minimal and flexible login manager, with the wlgreet greeter.
   services.greetd = {
     enable = true;
-    wayland.enable = true;
     settings = {
       default_session = {
         command = "${pkgs.hyprland}/bin/Hyprland";
+        user = "oleg";
       };
     };
+  };
+
+  # Required for greetd to function correctly
+  programs.wlgreet = {
+    enable = true;
+    command = "Hyprland";
   };
 
   users.users.oleg = {
