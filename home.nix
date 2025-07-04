@@ -23,7 +23,7 @@
 		networkmanagerapplet
 
 		# Browser
-		google-chrome
+		ungoogled-chromium
 
 		# archives
 		zip
