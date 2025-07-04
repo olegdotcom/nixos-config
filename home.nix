@@ -23,9 +23,6 @@
 		networkmanagerapplet
 		dconf
 
-		# Browser
-		ungoogled-chromium
-
 		# archives
 		zip
 		xz
@@ -36,6 +33,14 @@
 	home.stateVersion = "25.05";
 
 	programs.home-manager.enable = true;
+
+	programs.ungoogled-chromium = {
+	  enable = true;
+	  package = pkgs.ungoogled-chromium;
+	  extensions = [
+	    pkgs.chromium-extensions.darkreader
+	  ];
+	};
 
 	programs.git = {
 		enable = true;
