@@ -15,7 +15,6 @@
 		libva-utils # For checking hardware video acceleration (vainfo)
 
 		# Hyprland ecosystem
-		hyprland
 		foot
 		anyrun
 		waybar
