@@ -34,12 +34,10 @@
 
 	programs.home-manager.enable = true;
 
-	programs.ungoogled-chromium = {
+	programs.chromium = {
 	  enable = true;
-	  package = pkgs.ungoogled-chromium;
 	  extensions = [
-      # DarkReader extension
-	    { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; }
+	    pkgs.chromium-extensions.darkreader
 	  ];
 	};
 
