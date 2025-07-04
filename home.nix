@@ -147,7 +147,7 @@
 
 		"foot/foot.ini".text = ''
 			# Minimal foot terminal config
-			font=SauceCodePro Nerd Font:size=14
+			font=SauceCodePro Nerd Font Mono:size=14
 			term=xterm-256color
 		'';
 
@@ -163,7 +163,7 @@
 		"anyrun/style.css".text = ''
 			/* Minimal anyrun style */
 			* {
-				font-family: "SauceCodePro Nerd Font";
+				font-family: "SauceCodePro Nerd Font Mono";
 			}
 
 			#window {
@@ -250,7 +250,7 @@
 			* {
 					border: none;
 					border-radius: 0;
-					font-family: "SauceCodePro Nerd Font", monospace;
+					font-family: "SauceCodePro Nerd Font Mono";
 					font-size: 16px;
 					min-height: 0;
 			}
