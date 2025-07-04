@@ -89,22 +89,26 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.hyprland}/bin/Hyprland";
-        user = "oleg";
+        command = "${pkgs.greetd.wlgreet}/bin/wlgreet --command Hyprland";
+        user = "greeter";
       };
     };
   };
 
   # Required for greetd to function correctly
-  programs.wlgreet = {
-    enable = true;
-    command = "Hyprland";
-  };
+  environment.systemPackages = with pkgs; [
+    greetd.wlgreet
+  ];
 
+  # Set environment variables for greetd
+  environment.etc."greetd/environments".text = ''
+    Hyprland
+  '';
+  
   users.users.oleg = {
     isNormalUser = true;
     home = "/home/oleg";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "video" ];
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
