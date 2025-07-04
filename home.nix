@@ -21,6 +21,7 @@
 		pavucontrol # Volume control for waybar
 		networkmanagerapplet
 		dconf
+		hyprshot
 
 		# CLI Tools
 		gemini-cli
@@ -124,6 +125,7 @@
 			# Window management
 			bind = $mainMod, Q, killactive,
 			bind = $mainMod, M, exit, # Exit Hyprland
+			bind = $mainMod, P, exec, hyprshot -m region
 
 			# Move focus
 			bind = $mainMod, left, movefocus, l
