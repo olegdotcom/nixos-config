@@ -37,7 +37,7 @@
 	programs.chromium = {
 	  enable = true;
 	  extensions = [
-	    pkgs.chromium-extensions.darkreader
+      "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
 	  ];
 	};
 
