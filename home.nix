@@ -22,6 +22,9 @@
 		pavucontrol # Volume control for waybar
 		networkmanagerapplet
 
+		# Browser
+		google-chrome
+
 		# archives
 		zip
 		xz
