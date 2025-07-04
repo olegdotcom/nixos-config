@@ -70,7 +70,7 @@
   	noto-fonts
 	noto-fonts-cjk-sans
 	noto-fonts-emoji
-	(nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+  nerd-fonts.source-code-pro
   ];
 
   environment.sessionVariables = {
