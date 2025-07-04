@@ -70,6 +70,7 @@
   	noto-fonts
 	noto-fonts-cjk-sans
 	noto-fonts-emoji
+	source-code-pro-nerdfont
   ];
 
   environment.sessionVariables = {

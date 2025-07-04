@@ -222,7 +222,7 @@
 			* {
 					border: none;
 					border-radius: 0;
-					font-family: monospace;
+					font-family: "SauceCodePro Nerd Font";
 					font-size: 16px;
 					min-height: 0;
 			}
