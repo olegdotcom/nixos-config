@@ -88,6 +88,11 @@
   services.greetd = {
     enable = true;
     wayland.enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.hyprland}/bin/Hyprland";
+      };
+    };
   };
 
   users.users.oleg = {
@@ -110,6 +115,7 @@
     git
     wayland
     xdg-desktop-portal-hyprland
+    greetd.wlgreet
   ];
   environment.variables.EDITOR = "nvim";
 
