@@ -146,7 +146,7 @@
 		"anyrun/style.css".text = ''
 			/* Minimal anyrun style */
 			* {
-				font-family: monospace;
+				font-family: "SauceCodePro Nerd Font";
 			}
 
 			#window {
