@@ -38,7 +38,8 @@
 	  enable = true;
 	  package = pkgs.ungoogled-chromium;
 	  extensions = [
-	    pkgs.chromium-extensions.darkreader
+      # DarkReader extension
+	    { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; }
 	  ];
 	};
 
