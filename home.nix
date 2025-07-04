@@ -21,6 +21,7 @@
 		waybar
 		pavucontrol # Volume control for waybar
 		networkmanagerapplet
+		dconf
 
 		# Browser
 		ungoogled-chromium
@@ -45,6 +46,14 @@
 	programs.gh = {
 		enable = true;
 		gitCredentialHelper.enable = true;
+	};
+
+	# Set the system-wide color scheme preference to dark.
+	# This is the modern way to signal dark mode to apps like Chromium.
+	dconf.settings = {
+		"org/gnome/desktop/interface" = {
+			"color-scheme" = "prefer-dark";
+		};
 	};
 
 	# Declaratively manage config files
