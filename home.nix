@@ -262,7 +262,7 @@
 					background: #4c566a;
 			}
 
-			#pulseaudio, #network, #clock {
+			#pipewire, #network, #clock {
 					padding: 0 10px;
 			}
 
