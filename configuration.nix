@@ -124,7 +124,6 @@
     greetd.tuigreet
     nushell
   ];
-  environment.variables.EDITOR = "nvim";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

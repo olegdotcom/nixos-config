@@ -80,10 +80,11 @@
 		"waybar/style.css".source = ./dotfiles/waybar/style.css;
 	};
 
+	home.sessionVariables = {
+		EDITOR = "nvim";
+	};
+
 	programs.nushell = {
 	  enable = true;
-	  environmentVariables = {
-	    EDITOR = "nvim";
-	  };
 	};
 }
