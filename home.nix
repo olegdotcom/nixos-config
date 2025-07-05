@@ -319,5 +319,8 @@
 					}
 			}
 		'';
+	    "nushell/env.nu".text = ''
+	      $env.EDITOR = "nvim"
+	    '';
 	};
 }

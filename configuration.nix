@@ -104,6 +104,7 @@
     isNormalUser = true;
     home = "/home/oleg";
     extraGroups = [ "wheel" "networkmanager" "video" ];
+    shell = pkgs.nushell;
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -121,6 +122,7 @@
     wayland
     xdg-desktop-portal-hyprland
     greetd.tuigreet
+    nushell
   ];
   environment.variables.EDITOR = "nvim";
 
