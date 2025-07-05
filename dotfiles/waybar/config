@@ -23,7 +23,7 @@
 			"icons": ["", "", "", "", ""]
 	},
 	"pulseaudio": {
-			"format": "{volume}% {icon}",
+			"format": "{volume}% ",
 			"format-muted": "Muted ",
 			"on-click": "pavucontrol",
 			"tooltip": false,
