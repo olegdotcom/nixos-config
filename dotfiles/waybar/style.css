@@ -26,8 +26,12 @@ window#waybar {
 		background: #4c566a;
 }
 
-#pipewire, #network, #clock {
+#pulseaudio, #network, #clock {
 		padding: 0 10px;
+}
+
+#pulseaudio {
+		font-family: "SauceCodePro Nerd Font Mono";
 }
 
 #battery {
