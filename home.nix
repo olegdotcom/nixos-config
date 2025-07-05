@@ -26,6 +26,9 @@
 		# CLI Tools
 		gemini-cli
 
+		# Development
+		code-cursor-fhs
+
 		# archives
 		zip
 		xz
