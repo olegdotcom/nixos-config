@@ -4,7 +4,7 @@
 	"height": 35,
 	"modules-left": ["hyprland/workspaces"],
 	"modules-center": [],
-	"modules-right": ["battery", "pipewire", "network", "clock"],
+	"modules-right": ["battery", "pulseaudio", "network", "clock"],
 	"hyprland/workspaces": {
 			"disable-scroll": true,
 			"all-outputs": true,
@@ -22,7 +22,7 @@
 			"format-alt": "{time} {icon}",
 			"icons": ["", "", "", "", ""]
 	},
-	"pipewire": {
+	"pulseaudio": {
 			"format": "{volume}% {icon}",
 			"format-muted": "Muted ",
 			"on-click": "pavucontrol",

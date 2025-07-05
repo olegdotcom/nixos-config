@@ -13,12 +13,14 @@
 		which
 		gh
 		libva-utils # For checking hardware video acceleration (vainfo)
+		procps
 
 		# Hyprland ecosystem
 		foot
 		anyrun
 		waybar
 		pavucontrol # Volume control for waybar
+		pulseaudio
 		networkmanagerapplet
 		dconf
 		hyprshot
