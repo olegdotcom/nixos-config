@@ -1,0 +1,6 @@
+Config(
+	plugins: [
+		"libapplications.so",
+		"librink.so",
+	]
+) 
