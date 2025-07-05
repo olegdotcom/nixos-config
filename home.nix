@@ -323,4 +323,11 @@
 	      $env.EDITOR = "nvim"
 	    '';
 	};
+
+	programs.nushell = {
+	  enable = true;
+	  environmentVariables = {
+	    EDITOR = "nvim";
+	  };
+	};
 }
