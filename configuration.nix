@@ -89,16 +89,13 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd Hyprland";
+        command = ''
+          ${pkgs.greetd.tuigreet}/bin/tuigreet --cmd '${pkgs.hyprland}/bin/Hyprland'
+        '';
         user = "greeter";
       };
     };
   };
-
-  # Set environment variables for greetd
-  environment.etc."greetd/environments".text = ''
-    Hyprland
-  '';
   
   users.users.oleg = {
     isNormalUser = true;
