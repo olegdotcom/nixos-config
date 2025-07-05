@@ -4,7 +4,7 @@
 	"height": 35,
 	"modules-left": ["hyprland/workspaces"],
 	"modules-center": [],
-	"modules-right": ["battery", "pulseaudio", "network", "clock"],
+	"modules-right": ["tray", "pulseaudio", "battery", "clock"],
 	"hyprland/workspaces": {
 			"disable-scroll": true,
 			"all-outputs": true,
@@ -31,12 +31,9 @@
 				"default": ["", "", ""]
 			}
 	},
-	"network": {
-			"format-wifi": "{essid} ({signalStrength}%) ",
-			"format-ethernet": "{ifname} ",
-			"format-disconnected": "Disconnected ⚠",
-			"tooltip-format": "{ifname} via {gwaddr} ",
-			"on-click": "nm-connection-editor"
+	"tray": {
+		"icon-size": 18,
+		"spacing": 10
 	},
 	"clock": {
 			"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
