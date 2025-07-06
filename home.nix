@@ -19,6 +19,7 @@
 		foot
 		anyrun
 		waybar
+		hyprpaper
 		pavucontrol # Volume control for waybar
 		pulseaudio
 		networkmanagerapplet
@@ -78,6 +79,8 @@
 	# Declaratively manage config files
 	xdg.configFile = {
 		"hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
+		"hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
+		"hypr/wallpaper.png".source = ./dotfiles/assets/wallpaper.png;
 		"foot/foot.ini".source = ./dotfiles/foot/foot.ini;
 		"anyrun/config.ron".source = ./dotfiles/anyrun/config.ron;
 		"anyrun/style.css".source = ./dotfiles/anyrun/style.css;
