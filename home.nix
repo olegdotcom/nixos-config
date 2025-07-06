@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
 	home.username = "oleg";
@@ -16,6 +16,7 @@
 		procps
 
 		# Hyprland ecosystem
+		hyprland
 		foot
 		anyrun
 		waybar
@@ -31,6 +32,9 @@
 
 		# Development
 		code-cursor-fhs
+
+		# Browsers
+		inputs.zen-browser.packages."${pkgs.system}".default
 
 		# archives
 		zip
