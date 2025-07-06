@@ -14,6 +14,7 @@
 		gh
 		libva-utils # For checking hardware video acceleration (vainfo)
 		procps
+		hyprlock
 
 		# Hyprland ecosystem
 		hyprland
