@@ -52,6 +52,8 @@
 
 		# System monitoring
 		lm_sensors
+		pamixer
+		brightnessctl
 	];
 
 	home.stateVersion = "25.05";

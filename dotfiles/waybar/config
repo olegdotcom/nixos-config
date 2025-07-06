@@ -4,7 +4,7 @@
 	"height": 38,
 	"modules-left": ["hyprland/workspaces"],
 	"modules-center": [],
-	"modules-right": ["temperature", "cpu", "memory", "tray", "pulseaudio", "battery", "clock"],
+	"modules-right": ["temperature", "cpu", "memory", "tray", "backlight", "pulseaudio", "battery", "clock"],
 	"hyprland/workspaces": {
 			"disable-scroll": true,
 			"all-outputs": true,
@@ -19,6 +19,11 @@
             "default": ["", "", ""]
         }
     },
+	"backlight": {
+		"device": "intel_backlight",
+		"format": "{icon} {percent}%",
+		"format-icons": [""]
+	},
 	"cpu": {
 		"format": " {usage}%",
 		"tooltip": true,
