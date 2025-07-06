@@ -48,6 +48,9 @@
 		# Media
 		imv
 		mpv
+
+		# System monitoring
+		lm_sensors
 	];
 
 	home.stateVersion = "25.05";
