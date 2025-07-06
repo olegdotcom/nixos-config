@@ -84,7 +84,7 @@
 	xdg.configFile = {
 		"hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
 		"hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
-		"hypr/wallpaper.png".source = ./dotfiles/assets/wallpaper.png;
+		"hypr/wallpaper.png".source = ./dotfiles/hypr/wallpaper.png;
 		"foot/foot.ini".source = ./dotfiles/foot/foot.ini;
 		"anyrun/config.ron".source = ./dotfiles/anyrun/config.ron;
 		"anyrun/style.css".source = ./dotfiles/anyrun/style.css;
