@@ -61,6 +61,8 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+    
+  services.hardware.bolt.enable = true;
 
   powerManagement.enable = true;
   services.logind = {

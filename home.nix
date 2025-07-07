@@ -54,6 +54,7 @@
 		lm_sensors
 		pamixer
 		brightnessctl
+		bolt
 	];
 
 	home.stateVersion = "25.05";
