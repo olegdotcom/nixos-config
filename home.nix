@@ -70,6 +70,9 @@
 		enable = true;
 		userName = "Oleg Morfiianets";
 		userEmail = "1759220+olegdotcom@users.noreply.github.com";
+		extraConfig = {
+		  core.editor = "nvim";
+		};
 	};
 
 	programs.gh = {
