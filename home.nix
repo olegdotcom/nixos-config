@@ -55,6 +55,7 @@
 		pamixer
 		brightnessctl
 		bolt
+		bluetui
 	];
 
 	home.stateVersion = "25.05";

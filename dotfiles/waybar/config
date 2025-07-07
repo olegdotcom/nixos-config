@@ -4,7 +4,7 @@
 	"height": 38,
 	"modules-left": ["hyprland/workspaces"],
 	"modules-center": [],
-	"modules-right": ["temperature", "cpu", "memory", "tray", "backlight", "pulseaudio", "battery", "clock"],
+	"modules-right": ["temperature", "cpu", "memory", "tray", "bluetooth", "backlight", "pulseaudio", "battery", "clock"],
 	"hyprland/workspaces": {
 			"disable-scroll": true,
 			"all-outputs": true,
@@ -19,6 +19,14 @@
             "default": ["", "", ""]
         }
     },
+	"bluetooth": {
+		"format": " {status}",
+		"format-disabled": "", 
+		"format-connected": " {device_alias}",
+		"tooltip-format": "{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias} <span foreground='#999'>({device_address})</span>",
+		"on-click": "foot bluetui"
+	},
 	"backlight": {
 		"device": "intel_backlight",
 		"format": "{icon} {percent}%",
