@@ -14,11 +14,12 @@
 		gh
 		libva-utils # For checking hardware video acceleration (vainfo)
 		procps
-		hyprlock
-		hypridle
+    usbutils
 
 		# Hyprland ecosystem
 		hyprland
+		hyprlock
+		hypridle
 		foot
 		anyrun
 		waybar
