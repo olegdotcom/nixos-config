@@ -28,11 +28,9 @@
 		dconf
 		hyprshot
 
-		# CLI Tools
-		gemini-cli
-
 		# Development
 		code-cursor-fhs
+		gemini-cli
 
 		# Messaging
 		signal-desktop
