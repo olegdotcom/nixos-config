@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
 	home.username = "oleg";
@@ -33,9 +33,6 @@
 
 		# Development
 		code-cursor-fhs
-
-		# Browsers
-		inputs.zen-browser.packages."${pkgs.system}".default
 
 		# archives
 		zip

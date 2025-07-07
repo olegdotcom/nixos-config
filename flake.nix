@@ -8,17 +8,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    zen-browser = {
-      url = "github:MarceColl/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, home-manager, zen-browser, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }: {
     nixosConfigurations.oleg-laptop = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inherit inputs; }; # Pass inputs to modules
       modules = [
         ./configuration.nix
         home-manager.nixosModules.home-manager
@@ -27,7 +21,6 @@
           home-manager.useUserPackages = true;
           home-manager.backupFileExtension = "backup";
           home-manager.users.oleg = import ./home.nix;
-          home-manager.extraSpecialArgs = { inherit inputs; };
         }
       ];
     };
