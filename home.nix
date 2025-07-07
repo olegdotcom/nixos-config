@@ -34,6 +34,9 @@
 		# Development
 		code-cursor-fhs
 
+		# Messaging
+		signal-desktop
+
 		# archives
 		zip
 		xz
