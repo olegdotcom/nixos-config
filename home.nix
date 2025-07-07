@@ -32,9 +32,6 @@
 		code-cursor-fhs
 		gemini-cli
 
-		# Email
-		proton-mail-desktop
-
 		# Messaging
 		signal-desktop
 
