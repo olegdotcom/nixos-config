@@ -90,6 +90,7 @@
 
 	# Declaratively manage config files
 	xdg.configFile = {
+		"nvim".source = ./dotfiles/nvim;
 		"hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
 		"hypr/hypridle.conf".source = ./dotfiles/hypr/hypridle.conf;
 		"hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
