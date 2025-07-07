@@ -16,6 +16,14 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelParams = [
+    # Faster sleep wakeup
+    "mem_sleep_default=s2idle"
+    # Better cpu scheduling
+    "amd_pstate=active"
+    # Optimized screen rendering
+    "amdgpu.psr=1"
+  ];
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -52,6 +60,12 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+  };
+
+  powerManagement.enable = true;
+  services.logind = {
+    lidSwitch = "ignore";
+    lidSwitchDocked = "ignore";
   };
 
   hardware.bluetooth.enable = true;
@@ -120,6 +134,7 @@
     xdg-desktop-portal-hyprland
     greetd.tuigreet
     nushell
+    hyprlock
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
