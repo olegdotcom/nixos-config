@@ -22,8 +22,6 @@
   boot.kernelParams = [
     # Slow sleep to save battery
     "mem_sleep_default=deep"
-    # Better cpu scheduling
-    "amd_pstate=active"
   ];
 
   # Use latest kernel.
@@ -35,9 +33,6 @@
 
   # Firmware updater.
   services.fwupd.enable = true;
-
-  # For power management on laptops.
-  services.tlp.enable = true;
 
   networking.hostName = "oleg-laptop";
   networking.networkmanager.enable = true;
