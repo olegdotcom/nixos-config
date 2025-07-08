@@ -1,121 +1,121 @@
 { config, pkgs, ... }:
 
 {
-	home.username = "oleg";
-	home.homeDirectory = "/home/oleg";
+  home.username = "oleg";
+  home.homeDirectory = "/home/oleg";
 
-	home.packages = with pkgs; [
-		# Core
-		neofetch
-		ripgrep
-		jq
-		fzf
-		which
-		gh
-		libva-utils # For checking hardware video acceleration (vainfo)
-		procps
+  home.packages = with pkgs; [
+    # Core
+    neofetch
+    ripgrep
+    jq
+    fzf
+    which
+    gh
+    libva-utils # For checking hardware video acceleration (vainfo)
+    procps
     usbutils
 
-		# Hyprland ecosystem
-		hyprland
-		hyprlock
-		hypridle
-		foot
-		anyrun
-		waybar
-		hyprpaper
-		pavucontrol # Volume control for waybar
-		pulseaudio
-		networkmanagerapplet
-		dconf
-		hyprshot
+    # Hyprland ecosystem
+    hyprland
+    hyprlock
+    hypridle
+    foot
+    anyrun
+    waybar
+    hyprpaper
+    pavucontrol # Volume control for waybar
+    pulseaudio
+    networkmanagerapplet
+    dconf
+    hyprshot
 
-		# Development
-		code-cursor-fhs
-		gemini-cli
-		nil
-		nixpkgs-fmt
-		lua-language-server
-		gopls
-		llvmPackages.clang
+    # Development
+    code-cursor-fhs
+    gemini-cli
+    nil
+    nixpkgs-fmt
+    lua-language-server
+    gopls
+    llvmPackages.clang
 
-		# Messaging
-		signal-desktop
+    # Messaging
+    signal-desktop
 
-		# archives
-		zip
-		xz
-		unzip
-		p7zip
+    # archives
+    zip
+    xz
+    unzip
+    p7zip
 
-		# Note-taking
-		xournalpp
+    # Note-taking
+    xournalpp
 
-		# Media
-		imv
-		mpv
+    # Media
+    imv
+    mpv
 
-		# System monitoring
-		lm_sensors
-		pamixer
-		brightnessctl
-		bolt
-		bluetui
-	];
+    # System monitoring
+    lm_sensors
+    pamixer
+    brightnessctl
+    bolt
+    bluetui
+  ];
 
-	home.stateVersion = "25.05";
+  home.stateVersion = "25.05";
 
-	programs.home-manager.enable = true;
+  programs.home-manager.enable = true;
 
-	programs.chromium = {
-	  enable = true;
-	  extensions = [
+  programs.chromium = {
+    enable = true;
+    extensions = [
       "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
-	  ];
-	};
+    ];
+  };
 
-	programs.git = {
-		enable = true;
-		userName = "Oleg Morfiianets";
-		userEmail = "1759220+olegdotcom@users.noreply.github.com";
-		extraConfig = {
-		  core.editor = "nvim";
-		};
-	};
+  programs.git = {
+    enable = true;
+    userName = "Oleg Morfiianets";
+    userEmail = "1759220+olegdotcom@users.noreply.github.com";
+    extraConfig = {
+      core.editor = "nvim";
+    };
+  };
 
-	programs.gh = {
-		enable = true;
-		gitCredentialHelper.enable = true;
-	};
+  programs.gh = {
+    enable = true;
+    gitCredentialHelper.enable = true;
+  };
 
-	# Set the system-wide color scheme preference to dark.
-	# This is the modern way to signal dark mode to apps like Chromium.
-	dconf.settings = {
-		"org/gnome/desktop/interface" = {
-			"color-scheme" = "prefer-dark";
-		};
-	};
+  # Set the system-wide color scheme preference to dark.
+  # This is the modern way to signal dark mode to apps like Chromium.
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      "color-scheme" = "prefer-dark";
+    };
+  };
 
-	# Declaratively manage config files
-	xdg.configFile = {
-		"nvim".source = ./dotfiles/nvim;
-		"hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
-		"hypr/hypridle.conf".source = ./dotfiles/hypr/hypridle.conf;
-		"hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
-		"hypr/wallpaper.png".source = ./dotfiles/hypr/wallpaper.png;
-		"foot/foot.ini".source = ./dotfiles/foot/foot.ini;
-		"anyrun/config.ron".source = ./dotfiles/anyrun/config.ron;
-		"anyrun/style.css".source = ./dotfiles/anyrun/style.css;
-		"waybar/config".source = ./dotfiles/waybar/config;
-		"waybar/style.css".source = ./dotfiles/waybar/style.css;
-		"neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
-	};
+  # Declaratively manage config files
+  xdg.configFile = {
+    "nvim".source = ./dotfiles/nvim;
+    "hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
+    "hypr/hypridle.conf".source = ./dotfiles/hypr/hypridle.conf;
+    "hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
+    "hypr/wallpaper.png".source = ./dotfiles/hypr/wallpaper.png;
+    "foot/foot.ini".source = ./dotfiles/foot/foot.ini;
+    "anyrun/config.ron".source = ./dotfiles/anyrun/config.ron;
+    "anyrun/style.css".source = ./dotfiles/anyrun/style.css;
+    "waybar/config".source = ./dotfiles/waybar/config;
+    "waybar/style.css".source = ./dotfiles/waybar/style.css;
+    "neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
+  };
 
-	home.sessionVariables = {
-		EDITOR = "nvim";
-	};
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
 
-	programs.nushell = {
-	  enable = true;
-	};
+  programs.nushell = {
+    enable = true;
+  };
 }
