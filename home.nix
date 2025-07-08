@@ -103,6 +103,7 @@
 		"anyrun/style.css".source = ./dotfiles/anyrun/style.css;
 		"waybar/config".source = ./dotfiles/waybar/config;
 		"waybar/style.css".source = ./dotfiles/waybar/style.css;
+		"neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
 	};
 
 	home.sessionVariables = {
