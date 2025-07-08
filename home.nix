@@ -61,12 +61,14 @@ in
     libva-utils # For checking hardware video acceleration (vainfo)
     procps
     usbutils
+    bat
 
     # Hyprland ecosystem
     hyprland
     hyprlock
     hypridle
     foot
+    ghostty
     anyrun
     waybar
     hyprpaper
@@ -152,9 +154,12 @@ in
     "hypr/hypridle.conf".source = ./dotfiles/hypr/hypridle.conf;
     "hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
     "hypr/wallpaper.png".source = ./dotfiles/hypr/wallpaper.png;
-    "foot/foot.ini".source = ./dotfiles/foot/foot.ini;
     "anyrun/config.ron".source = ./dotfiles/anyrun/config.ron;
     "anyrun/style.css".source = ./dotfiles/anyrun/style.css;
+    "bat/config".source = ./dotfiles/bat/config;
+    "bat/themes/catppuccin-mocha.tmTheme".source = ./dotfiles/bat/themes/catppuccin-mocha.tmTheme;
+    "foot/foot.ini".source = ./dotfiles/foot/foot.ini;
+    "ghostty/config".source = ./dotfiles/ghostty/config;
     "waybar/config".source = ./dotfiles/waybar/config;
     "waybar/style.css".source = ./dotfiles/waybar/style.css;
     "neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
@@ -167,4 +172,9 @@ in
   programs.nushell = {
     enable = true;
   };
+
+  # Rebuild bat cache after theme changes
+  home.activation.rebuildBatCache = ''
+    ${pkgs.bat}/bin/bat cache --build
+  '';
 }

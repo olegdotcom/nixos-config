@@ -1,0 +1,6 @@
+theme = catppuccin-mocha
+
+font-family = "SauceCodePro Nerd Font Mono"
+font-size = 14
+
+# term = "xterm-256color"
