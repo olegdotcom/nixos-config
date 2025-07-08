@@ -17,8 +17,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelParams = [
-    # Faster sleep wakeup
-    "mem_sleep_default=s2idle"
+    # Slow sleep to save battery
+    "mem_sleep_default=deep"
     # Better cpu scheduling
     "amd_pstate=active"
     # Optimized screen rendering
@@ -64,10 +64,6 @@
   services.hardware.bolt.enable = true;
 
   powerManagement.enable = true;
-  services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchDocked = "ignore";
-  };
 
   hardware.bluetooth = {
     enable = true;
