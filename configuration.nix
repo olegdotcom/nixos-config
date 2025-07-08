@@ -46,11 +46,10 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Set keyboard layout and map Caps Lock to Escape system-wide.
+  # Set keyboard layout system-wide.
   # This is respected by both the console and Wayland/X11.
   console.useXkbConfig = true;
   services.xserver.xkb.layout = "us";
-  services.xserver.xkb.options = "caps:escape";
 
   # Enable sound.
   services.pulseaudio.enable = false;
