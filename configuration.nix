@@ -27,7 +27,11 @@
   ];
 
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_testing;
+
+  # Explicitly load amdgpu driver for VRR and Wayland.
+  boot.kernelModules = [ "amdgpu" ];
+  boot.initrd.availableKernelModules = [ "amdgpu" ];
 
   # Firmware updater.
   services.fwupd.enable = true;
@@ -73,11 +77,10 @@
   hardware.graphics = {
     enable = true;
   };
-  services.xserver.videoDrivers = [ "amdgpu" ];
 
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
+    xwayland.enable = false;
   };
 
   fonts.packages = with pkgs; [
