@@ -20,5 +20,6 @@ require("lazy").setup({
   spec = {
     { import = "plugins" },
   },
+  lockfile = vim.fn.expand("~") .. "/repo/nixos-config/dotfiles/nvim/lazy-lock.json",
 })
 

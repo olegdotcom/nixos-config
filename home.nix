@@ -33,6 +33,11 @@
 		# Development
 		code-cursor-fhs
 		gemini-cli
+		nil
+		nixpkgs-fmt
+		lua-language-server
+		gopls
+		llvmPackages.clang
 
 		# Messaging
 		signal-desktop

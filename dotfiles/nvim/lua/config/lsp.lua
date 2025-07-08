@@ -41,3 +41,9 @@ lspconfig.clangd.setup({
   capabilities = capabilities,
   on_attach = on_attach,
 })
+
+-- Nix
+lspconfig.nil_ls.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
