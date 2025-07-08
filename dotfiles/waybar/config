@@ -4,7 +4,7 @@
 	"height": 38,
 	"modules-left": ["hyprland/workspaces"],
 	"modules-center": [],
-	"modules-right": ["temperature", "cpu", "memory", "tray", "bluetooth", "backlight", "pulseaudio", "battery", "clock"],
+	"modules-right": ["custom/power", "temperature", "cpu", "memory", "tray", "bluetooth", "backlight", "pulseaudio", "battery", "clock"],
 	"hyprland/workspaces": {
 			"disable-scroll": true,
 			"all-outputs": true,
@@ -72,5 +72,12 @@
 			"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
 			"format-alt": "{:%Y-%m-%d}",
 			"format": "{:%a %b %d %H:%M}"
-	}
+	},
+    "custom/power": {
+        "format": "{}",
+        "exec": "power-profile-switch",
+        "return-type": "json",
+        "on-click": "power-profile-switch switch",
+        "interval": 3
+    }
 } 

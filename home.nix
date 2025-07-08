@@ -1,5 +1,51 @@
 { config, pkgs, ... }:
 
+let
+  power-profile-script = pkgs.writeShellScriptBin "power-profile-switch" ''
+    #!${pkgs.runtimeShell}
+
+    # Get the current profile and set the corresponding icon
+    get_profile() {
+        PROFILE=$(${pkgs.power-profiles-daemon}/bin/powerprofilesctl get)
+        case "$PROFILE" in
+            performance)
+                ICON="🚀"
+                ;;
+            balanced)
+                ICON="⚖️"
+                ;;
+            power-saver)
+                ICON="🌿"
+                ;;
+            *)
+                ICON="?"
+                ;;
+        esac
+    }
+
+    # Handle the click event to switch profiles
+    case "$1" in
+        switch)
+            CURRENT_PROFILE=$(${pkgs.power-profiles-daemon}/bin/powerprofilesctl get)
+            case "$CURRENT_PROFILE" in
+                performance)
+                    ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver
+                    ;;
+                balanced)
+                    ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance
+                    ;;
+                power-saver)
+                    ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set balanced
+                    ;;
+            esac
+            ;;
+    esac
+
+    # Get the current state and output JSON for Waybar
+    get_profile
+    printf '{"text": "%s", "tooltip": "Power Profile: %s", "class": "%s"}\n' "$ICON" "$PROFILE" "$PROFILE"
+  '';
+in
 {
   home.username = "oleg";
   home.homeDirectory = "/home/oleg";
@@ -61,6 +107,9 @@
     brightnessctl
     bolt
     bluetui
+
+    # Custom scripts
+    power-profile-script
   ];
 
   home.stateVersion = "25.05";

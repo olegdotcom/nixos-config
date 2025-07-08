@@ -62,4 +62,23 @@ window#waybar {
 
 #battery.critical {
     color: #BF616A; /* Red */
+}
+
+#custom-power {
+    padding: 2px 12px;
+    margin: 6px 3px;
+    background: #3B4252;
+    border-radius: 8px;
+}
+
+#custom-power.performance {
+    color: #BF616A; /* Red */
+}
+
+#custom-power.balanced {
+    color: #EBCB8B; /* Yellow */
+}
+
+#custom-power.power-saver {
+    color: #A3BE8C; /* Green */
 } 
