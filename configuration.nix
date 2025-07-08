@@ -24,8 +24,6 @@
     "mem_sleep_default=deep"
     # Better cpu scheduling
     "amd_pstate=active"
-    # Optimized screen rendering
-    "amdgpu.psr=1"
   ];
 
   # Use latest kernel.
