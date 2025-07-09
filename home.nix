@@ -62,6 +62,7 @@ in
     procps
     usbutils
     bat
+    yazi
 
     # Hyprland ecosystem
     hyprland
@@ -129,9 +130,11 @@ in
     enable = true;
     userName = "Oleg Morfiianets";
     userEmail = "1759220+olegdotcom@users.noreply.github.com";
-    extraConfig = {
-      core.editor = "nvim";
-    };
+  };
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
   };
 
   programs.gh = {
@@ -162,11 +165,8 @@ in
     "ghostty/config".source = ./dotfiles/ghostty/config;
     "waybar/config".source = ./dotfiles/waybar/config;
     "waybar/style.css".source = ./dotfiles/waybar/style.css;
+    "yazi/yazi.toml".source = ./dotfiles/yazi/yazi.toml;
     "neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
-  };
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
   };
 
   programs.nushell = {
