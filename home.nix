@@ -105,6 +105,7 @@ in
     mpv
 
     # System monitoring
+    bottom
     lm_sensors
     pamixer
     brightnessctl
