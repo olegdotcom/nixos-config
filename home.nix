@@ -153,20 +153,14 @@ in
   # Declaratively manage config files
   xdg.configFile = {
     "nvim".source = ./dotfiles/nvim;
-    "hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
-    "hypr/hypridle.conf".source = ./dotfiles/hypr/hypridle.conf;
-    "hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
-    "hypr/wallpaper.png".source = ./dotfiles/hypr/wallpaper.png;
-    "anyrun/config.ron".source = ./dotfiles/anyrun/config.ron;
-    "anyrun/style.css".source = ./dotfiles/anyrun/style.css;
-    "bat/config".source = ./dotfiles/bat/config;
-    "bat/themes/catppuccin-mocha.tmTheme".source = ./dotfiles/bat/themes/catppuccin-mocha.tmTheme;
-    "foot/foot.ini".source = ./dotfiles/foot/foot.ini;
-    "ghostty/config".source = ./dotfiles/ghostty/config;
-    "waybar/config".source = ./dotfiles/waybar/config;
-    "waybar/style.css".source = ./dotfiles/waybar/style.css;
-    "yazi/yazi.toml".source = ./dotfiles/yazi/yazi.toml;
-    "neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
+    "hypr".source = ./dotfiles/hypr;
+    "anyrun".source = ./dotfiles/anyrun;
+    "bat".source = ./dotfiles/bat;
+    "foot".source = ./dotfiles/foot;
+    "ghostty".source = ./dotfiles/ghostty;
+    "waybar".source = ./dotfiles/waybar;
+    "yazi".source = ./dotfiles/yazi;
+    "neofetch".source = ./dotfiles/neofetch;
   };
 
   programs.nushell = {
