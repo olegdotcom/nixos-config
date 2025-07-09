@@ -1,0 +1,5 @@
+[input]
+prepend_keymap = [
+    # `u` for undo, `U` for redo
+    { on = "U", run = "redo", desc = "Redo the last operation" },
+]
