@@ -3,4 +3,8 @@ theme = catppuccin-mocha
 font-family = "SauceCodePro Nerd Font Mono"
 font-size = 14
 
-term = "xterm-256color"
+window-decoration = none
+cursor-style = block
+cursor-style-blink = false
+
+# term = "xterm-256color"

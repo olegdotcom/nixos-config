@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };
@@ -20,6 +25,7 @@
       nixpkgs,
       nixos-hardware,
       home-manager,
+      ghostty,
       ...
     }:
     {
@@ -34,6 +40,7 @@
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
             home-manager.users.oleg = import ./home.nix;
+            home-manager.extraSpecialArgs = { inherit ghostty; };
           }
         ];
       };

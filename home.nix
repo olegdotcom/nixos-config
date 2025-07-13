@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ghostty,
+  ...
+}:
 
 let
   power-profile-script = pkgs.writeShellScriptBin "power-profile-switch" ''
@@ -71,7 +76,7 @@ in
     hyprlock
     hypridle
     foot
-    ghostty
+    ghostty.packages.${pkgs.system}.default
     anyrun
     waybar
     hyprpaper
