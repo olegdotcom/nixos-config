@@ -63,6 +63,8 @@ in
     usbutils
     bat
     yazi
+    fd
+    tldr
 
     # Hyprland ecosystem
     hyprland
