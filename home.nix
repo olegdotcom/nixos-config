@@ -2,6 +2,7 @@
   config,
   pkgs,
   ghostty,
+  atuin,
   ...
 }:
 
@@ -77,6 +78,7 @@ in
     hypridle
     foot
     ghostty.packages.${pkgs.system}.default
+    atuin.packages.${pkgs.system}.default
     anyrun
     waybar
     hyprpaper
@@ -169,6 +171,7 @@ in
     "waybar".source = ./dotfiles/waybar;
     "yazi".source = ./dotfiles/yazi;
     "neofetch".source = ./dotfiles/neofetch;
+    "nushell/config.nu".source = ./dotfiles/nushell/config.nu;
   };
 
   programs.nushell = {
