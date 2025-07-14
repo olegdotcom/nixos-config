@@ -2,7 +2,6 @@
   config,
   pkgs,
   ghostty,
-  atuin,
   ...
 }:
 
@@ -71,6 +70,7 @@ in
     yazi
     fd
     tldr
+    atuin
     zoxide
 
     # Hyprland ecosystem
@@ -79,7 +79,6 @@ in
     hypridle
     foot
     ghostty.packages.${pkgs.system}.default
-    atuin.packages.${pkgs.system}.default
     anyrun
     waybar
     hyprpaper
@@ -172,7 +171,16 @@ in
     "waybar".source = ./dotfiles/waybar;
     "yazi".source = ./dotfiles/yazi;
     "neofetch".source = ./dotfiles/neofetch;
-    "nushell/config.nu".source = ./dotfiles/nushell/config.nu;
+  };
+
+  programs.atuin = {
+    enable = true;
+    # Atuin's home-manager module automatically handles shell integration.
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableNushellIntegration = true;
   };
 
   programs.nushell = {
@@ -180,21 +188,7 @@ in
   };
 
   # Rebuild bat cache after theme changes
-  home.activation = {
-    rebuildBatCache = ''
-      ${pkgs.bat}/bin/bat cache --build
-    '';
-
-    initShellScripts = ''
-      # Make sure the atuin config directory exists
-      mkdir -p /home/oleg/.config/atuin
-      # Generate the atuin init script
-      ${pkgs.atuin}/bin/atuin init nu | tee /home/oleg/.config/atuin/init.nu > /dev/null
-
-      # Make sure the zoxide config directory exists
-      mkdir -p /home/oleg/.config/zoxide
-      # Generate the zoxide init script
-      ${pkgs.zoxide}/bin/zoxide init nushell | tee /home/oleg/.config/zoxide/init.nu > /dev/null
-    '';
-  };
+  home.activation.rebuildBatCache = ''
+    ${pkgs.bat}/bin/bat cache --build
+  '';
 }

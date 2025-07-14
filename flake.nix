@@ -9,11 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    atuin = {
-      url = "github:atuinsh/atuin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };
@@ -31,7 +26,6 @@
       nixos-hardware,
       home-manager,
       ghostty,
-      atuin,
       ...
     }:
     {
@@ -46,7 +40,7 @@
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
             home-manager.users.oleg = import ./home.nix;
-            home-manager.extraSpecialArgs = { inherit ghostty atuin; };
+            home-manager.extraSpecialArgs = { inherit ghostty; };
           }
         ];
       };
