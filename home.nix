@@ -71,6 +71,7 @@ in
     yazi
     fd
     tldr
+    zoxide
 
     # Hyprland ecosystem
     hyprland
@@ -179,7 +180,21 @@ in
   };
 
   # Rebuild bat cache after theme changes
-  home.activation.rebuildBatCache = ''
-    ${pkgs.bat}/bin/bat cache --build
-  '';
+  home.activation = {
+    rebuildBatCache = ''
+      ${pkgs.bat}/bin/bat cache --build
+    '';
+
+    initShellScripts = ''
+      # Make sure the atuin config directory exists
+      mkdir -p /home/oleg/.config/atuin
+      # Generate the atuin init script
+      ${pkgs.atuin}/bin/atuin init nu | tee /home/oleg/.config/atuin/init.nu > /dev/null
+
+      # Make sure the zoxide config directory exists
+      mkdir -p /home/oleg/.config/zoxide
+      # Generate the zoxide init script
+      ${pkgs.zoxide}/bin/zoxide init nushell | tee /home/oleg/.config/zoxide/init.nu > /dev/null
+    '';
+  };
 }
