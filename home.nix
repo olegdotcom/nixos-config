@@ -173,6 +173,10 @@ in
     "neofetch".source = ./dotfiles/neofetch;
   };
 
+  programs.nushell = {
+    enable = true;
+  };
+
   programs.atuin = {
     enable = true;
     # Atuin's home-manager module automatically handles shell integration.
@@ -183,8 +187,9 @@ in
     enableNushellIntegration = true;
   };
 
-  programs.nushell = {
+  programs.starship = {
     enable = true;
+    enableNushellIntegration = true;
   };
 
   # Rebuild bat cache after theme changes
