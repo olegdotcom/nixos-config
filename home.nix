@@ -89,7 +89,6 @@ in
     hyprshot
 
     # Development
-    code-cursor-fhs
     gemini-cli
     nil
     nixpkgs-fmt
