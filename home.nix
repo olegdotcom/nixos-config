@@ -174,10 +174,17 @@ in
 
   programs.nushell = {
     enable = true;
+    settings = {
+      show_banner = false;
+      edit_mode = "vi";
+    };
   };
 
   programs.atuin = {
     enable = true;
+    settings = {
+      keymap_mode = "vim-insert";
+    };
     # Atuin's home-manager module automatically handles shell integration.
   };
 
@@ -189,6 +196,11 @@ in
   programs.starship = {
     enable = true;
     enableNushellIntegration = true;
+    settings = {
+      directory = {
+        truncation_length = 0;
+      };
+    };
   };
 
   # Rebuild bat cache after theme changes
