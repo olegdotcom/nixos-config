@@ -114,6 +114,12 @@
     };
   };
 
+  # Enable Avahi for mDNS, allowing .local domain resolution for the NAS.
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
+
   users.users.oleg = {
     isNormalUser = true;
     home = "/home/oleg";
@@ -124,6 +130,10 @@
     ];
     shell = pkgs.nushell;
   };
+
+  # Explicitly declare the 'oleg' group to make it available for lookups
+  # elsewhere in the configuration, resolving an evaluation-order issue.
+  users.groups.oleg = {};
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -145,7 +155,36 @@
     greetd.tuigreet
     nushell
     hyprlock
+    cifs-utils
   ];
+
+  fileSystems =
+    let
+      user = config.users.users.oleg;
+      # The user's primary group is 'oleg' because isNormalUser = true.
+      # The GID is an attribute of the group, not the user.
+      group = config.users.groups.oleg;
+      cifsOptions = [
+        "credentials=/etc/nixos/smb-credentials"
+        "uid=${toString user.uid}"
+        "gid=${toString group.gid}"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=1min"
+        "x-systemd.mount-timeout=10s"
+        "noauto"
+      ];
+      mkCifsMount = share: {
+        device = "//nas.local/${share}";
+        fsType = "cifs";
+        options = cifsOptions;
+      };
+    in
+    {
+      "/mnt/nas/oleg_files" = mkCifsMount "oleg_files";
+      "/mnt/nas/oleg_photos" = mkCifsMount "oleg_photos";
+      "/mnt/nas/shared_files" = mkCifsMount "shared_files";
+      "/mnt/nas/shared_photos" = mkCifsMount "shared_photos";
+    };
 
   # First NixOS version installed on this machine.
   system.stateVersion = "25.05";
