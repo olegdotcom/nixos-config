@@ -99,9 +99,6 @@ in
     # Messaging
     signal-desktop
 
-    # Browsers
-    ungoogled-chromium
-
     # archives
     zip
     xz
@@ -130,6 +127,13 @@ in
   home.stateVersion = "25.05";
 
   programs.home-manager.enable = true;
+
+  programs.chromium = {
+    enable = true;
+    extensions = [
+      "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
+    ];
+  };
 
   programs.git = {
     enable = true;
