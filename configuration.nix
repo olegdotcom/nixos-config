@@ -188,4 +188,30 @@
   # First NixOS version installed on this machine.
   system.stateVersion = "25.05";
 
+  # Automatically run garbage collection daily to clean the Nix store.
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+  };
+
+  # Automatically delete all but the last 10 generations daily.
+  systemd.services.cleanup-generations = {
+    description = "Clean up old NixOS generations";
+    script = ''
+      ${pkgs.nix}/bin/nix-env -p /nix/var/nix/profiles/system --delete-generations +10
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
+  systemd.timers.cleanup-generations = {
+    description = "Daily timer for cleaning up old NixOS generations";
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+    };
+    wantedBy = [ "timers.target" ];
+  };
 }
