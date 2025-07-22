@@ -117,12 +117,14 @@
   # Enable Avahi for mDNS, allowing .local domain resolution for the NAS.
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true; # For IPv4
+    nssmdns6 = true; # For IPv6
   };
 
   users.users.oleg = {
     isNormalUser = true;
     home = "/home/oleg";
+    uid = 1000;
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -130,10 +132,7 @@
     ];
     shell = pkgs.nushell;
   };
-
-  # Explicitly declare the 'oleg' group to make it available for lookups
-  # elsewhere in the configuration, resolving an evaluation-order issue.
-  users.groups.oleg = {};
+  users.groups.users.gid = 100;
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -160,30 +159,32 @@
 
   fileSystems =
     let
-      user = config.users.users.oleg;
-      # The user's primary group is 'oleg' because isNormalUser = true.
-      # The GID is an attribute of the group, not the user.
-      group = config.users.groups.oleg;
-      cifsOptions = [
-        "credentials=/etc/nixos/smb-credentials"
-        "uid=${toString user.uid}"
-        "gid=${toString group.gid}"
-        "x-systemd.automount"
-        "x-systemd.idle-timeout=1min"
-        "x-systemd.mount-timeout=10s"
-        "noauto"
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=1min,x-systemd.mount-timeout=10s,user,users";
+      cifsOpts = [
+        "${automount_opts},credentials=/etc/nixos/smb-credentials,uid=${toString config.users.users.oleg.uid},gid=${toString config.users.groups.users.gid}"
       ];
-      mkCifsMount = share: {
-        device = "//nas.local/${share}";
-        fsType = "cifs";
-        options = cifsOptions;
-      };
     in
     {
-      "/mnt/nas/oleg_files" = mkCifsMount "oleg_files";
-      "/mnt/nas/oleg_photos" = mkCifsMount "oleg_photos";
-      "/mnt/nas/shared_files" = mkCifsMount "shared_files";
-      "/mnt/nas/shared_photos" = mkCifsMount "shared_photos";
+      "/mnt/nas/oleg_files" = {
+        device = "//nas.local/oleg_files";
+        fsType = "cifs";
+        options = cifsOpts;
+      };
+      "/mnt/nas/oleg_photos" = {
+        device = "//nas.local/oleg_photos";
+        fsType = "cifs";
+        options = cifsOpts;
+      };
+      "/mnt/nas/shared_files" = {
+        device = "//nas.local/shared_files";
+        fsType = "cifs";
+        options = cifsOpts;
+      };
+      "/mnt/nas/shared_photos" = {
+        device = "//nas.local/shared_photos";
+        fsType = "cifs";
+        options = cifsOpts;
+      };
     };
 
   # First NixOS version installed on this machine.
