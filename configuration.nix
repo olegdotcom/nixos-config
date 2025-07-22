@@ -159,32 +159,30 @@
 
   fileSystems =
     let
-      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=1min,x-systemd.mount-timeout=10s,user,users";
-      cifsOpts = [
-        "${automount_opts},credentials=/etc/nixos/smb-credentials,uid=${toString config.users.users.oleg.uid},gid=${toString config.users.groups.users.gid}"
+      # Mounting options.
+      cifsOptions = [
+        "credentials=/etc/nixos/smb-credentials"
+        "uid=${toString config.users.users.oleg.uid}"
+        "gid=${toString config.users.groups.users.gid}"
+        "user"
+        "users"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=1min"
+        "x-systemd.mount-timeout=10s"
+        "noauto"
       ];
+      # Function to generate a mount point configuration.
+      mkCifsMount = share: {
+        device = "//nas.local/${share}";
+        fsType = "cifs";
+        options = cifsOptions;
+      };
     in
     {
-      "/mnt/nas/oleg_files" = {
-        device = "//nas.local/oleg_files";
-        fsType = "cifs";
-        options = cifsOpts;
-      };
-      "/mnt/nas/oleg_photos" = {
-        device = "//nas.local/oleg_photos";
-        fsType = "cifs";
-        options = cifsOpts;
-      };
-      "/mnt/nas/shared_files" = {
-        device = "//nas.local/shared_files";
-        fsType = "cifs";
-        options = cifsOpts;
-      };
-      "/mnt/nas/shared_photos" = {
-        device = "//nas.local/shared_photos";
-        fsType = "cifs";
-        options = cifsOpts;
-      };
+      "/mnt/nas/oleg_files" = mkCifsMount "oleg_files";
+      "/mnt/nas/oleg_photos" = mkCifsMount "oleg_photos";
+      "/mnt/nas/shared_files" = mkCifsMount "shared_files";
+      "/mnt/nas/shared_photos" = mkCifsMount "shared_photos";
     };
 
   # First NixOS version installed on this machine.
