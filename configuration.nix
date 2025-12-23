@@ -25,7 +25,7 @@
   ];
 
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_testing;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Explicitly load amdgpu driver for VRR and Wayland.
   boot.kernelModules = [ "amdgpu" ];
@@ -188,7 +188,6 @@
     enable = true;
     user = "oleg";
     dataDir = "/home/oleg";
-    # TODO: move this to ./dotfiles
     configDir = "/home/oleg/.config/syncthing";
 
     openDefaultPorts = true;
@@ -205,7 +204,7 @@
 
       devices = {
         nas = {
-          id = "457VXQQ-EUHKOAH-KJPBYPE-QMBKT63-NPZCYIH-U45B7GD-BJV5F77-Y7DBIAT";
+          id = "QLSLGHB-4AC64CH-RISJDID-ZINNZ5T-5PPP4FD-ZYJCOFP-LLGVYLB-APRXXQX";
           addresses = [
             "tcp://192.168.10.12:22000"
           ];
