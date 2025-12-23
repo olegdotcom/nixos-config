@@ -137,7 +137,7 @@ in
 
   programs.git = {
     enable = true;
-    userName = "Oleg Morfiianets";
+    userName = "Oleg Morfiyanets";
     userEmail = "1759220+olegdotcom@users.noreply.github.com";
   };
 

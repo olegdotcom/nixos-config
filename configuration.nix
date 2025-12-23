@@ -81,7 +81,7 @@
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     nerd-fonts.sauce-code-pro
   ];
 
@@ -179,11 +179,52 @@
       };
     in
     {
-      "/mnt/nas/oleg_files" = mkCifsMount "oleg_files";
-      "/mnt/nas/oleg_photos" = mkCifsMount "oleg_photos";
-      "/mnt/nas/shared_files" = mkCifsMount "shared_files";
-      "/mnt/nas/shared_photos" = mkCifsMount "shared_photos";
+      "/mnt/nas/core" = mkCifsMount "core";
+      "/mnt/nas/dump" = mkCifsMount "dump";
+      "/mnt/nas/photos" = mkCifsMount "photos";
     };
+
+  services.syncthing = {
+    enable = true;
+    user = "oleg";
+    dataDir = "/home/oleg";
+    # TODO: move this to ./dotfiles
+    configDir = "/home/oleg/.config/syncthing";
+
+    openDefaultPorts = true;
+
+    settings = {
+      options = {
+        # LAN-only hardening
+        globalAnnounceEnabled = false;
+        relaysEnabled = false;
+        natEnabled = false;
+        localAnnounceEnabled = true;
+        urAccepted = -1; # disable usage reporting
+      };
+
+      devices = {
+        nas = {
+          id = "457VXQQ-EUHKOAH-KJPBYPE-QMBKT63-NPZCYIH-U45B7GD-BJV5F77-Y7DBIAT";
+          addresses = [
+            "tcp://192.168.10.12:22000"
+          ];
+        };
+      };
+
+      folders = {
+        core = {
+          path = "/home/oleg/core";
+          devices = [ "nas" ];
+          type = "sendreceive";
+
+          # Important settings
+          ignorePerms = true;
+          fsWatcherEnabled = true;
+        };
+      };
+    };
+  };
 
   # First NixOS version installed on this machine.
   system.stateVersion = "25.05";
