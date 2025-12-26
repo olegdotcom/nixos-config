@@ -107,7 +107,7 @@
     settings = {
       default_session = {
         command = ''
-          ${pkgs.greetd.tuigreet}/bin/tuigreet --cmd '${pkgs.hyprland}/bin/Hyprland'
+          ${pkgs.tuigreet}/bin/tuigreet --cmd '${pkgs.hyprland}/bin/Hyprland'
         '';
         user = "greeter";
       };
@@ -151,7 +151,7 @@
     git
     wayland
     xdg-desktop-portal-hyprland
-    greetd.tuigreet
+    tuigreet
     nushell
     hyprlock
     cifs-utils

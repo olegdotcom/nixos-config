@@ -122,23 +122,30 @@ in
 
     # Custom scripts
     power-profile-script
+
+    # Browser
+    ungoogled-chromium
   ];
 
   home.stateVersion = "25.05";
 
   programs.home-manager.enable = true;
 
-  programs.chromium = {
-    enable = true;
-    extensions = [
-      "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
-    ];
-  };
+  # programs.chromium = {
+  #   enable = true;
+  #   extensions = [
+  #     "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
+  #   ];
+  # };
 
   programs.git = {
     enable = true;
-    userName = "Oleg Morfiyanets";
-    userEmail = "1759220+olegdotcom@users.noreply.github.com";
+    settings = {
+      user = {
+        name = "Oleg Morfiyanets";
+        email = "1759220+olegdotcom@users.noreply.github.com";
+      };
+    };
   };
 
   programs.neovim = {
