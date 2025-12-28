@@ -78,7 +78,7 @@ in
     hyprlock
     hypridle
     foot
-    ghostty.packages.${pkgs.system}.default
+    ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
     anyrun
     waybar
     hyprpaper
