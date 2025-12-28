@@ -1,22 +1,30 @@
-local lspconfig = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local function on_attach(client, bufnr)
-  -- Optional: format on save
-  if client.server_capabilities.documentFormattingProvider then
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      callback = function()
-        vim.lsp.buf.format({ async = false })
-      end,
-    })
-  end
-end
+-- Global configuration for all LSP servers
+vim.lsp.config("*", {
+  capabilities = capabilities,
+})
+
+-- Global LspAttach autocommand for buffer-local settings and on_attach logic
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local bufnr = args.buf
+
+    -- Optional: format on save
+    if client and client.server_capabilities.documentFormattingProvider then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format({ async = false, bufnr = bufnr })
+        end,
+      })
+    end
+  end,
+})
 
 -- Lua
-lspconfig.lua_ls.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
+vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       runtime = { version = "LuaJIT" },
@@ -30,20 +38,6 @@ lspconfig.lua_ls.setup({
   },
 })
 
--- Go
-lspconfig.gopls.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
+-- Enable servers: Lua, Go, C/C++, Nix
+vim.lsp.enable({ "lua_ls", "gopls", "clangd", "nil_ls" })
 
--- C/C++
-lspconfig.clangd.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})
-
--- Nix
-lspconfig.nil_ls.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-})

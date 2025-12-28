@@ -10,10 +10,9 @@ set -e
 MOUNT_POINT="/mnt/nas"
 CRED_FILE="/etc/nixos/smb-credentials"
 SHARE_DIRS=(
-  "oleg_files"
-  "oleg_photos"
-  "shared_files"
-  "shared_photos"
+  "core"
+  "dump"
+  "photos"
 )
 
 # 1. Create the mount point directories
