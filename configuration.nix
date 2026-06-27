@@ -103,7 +103,7 @@
 
   # Enable greetd, a minimal and flexible login manager, with the wlgreet greeter.
   services.greetd = {
-    enable = true;
+    enable = false;
     settings = {
       default_session = {
         command = ''
@@ -238,7 +238,7 @@
   systemd.services.cleanup-generations = {
     description = "Clean up old NixOS generations";
     script = ''
-      ${pkgs.nix}/bin/nix-env -p /nix/var/nix/profiles/system --delete-generations +10
+      ${pkgs.nix}/bin/nix-env -p /nix/var/nix/profiles/system --delete-generations +50
     '';
     serviceConfig = {
       Type = "oneshot";

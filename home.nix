@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  ghostty,
   ...
 }:
 
@@ -57,7 +56,7 @@ in
 
   home.packages = with pkgs; [
     # Core
-    neofetch
+    fastfetch
     ripgrep
     jq
     fzf
@@ -78,7 +77,6 @@ in
     hyprlock
     hypridle
     foot
-    ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
     anyrun
     waybar
     hyprpaper
@@ -173,7 +171,6 @@ in
     "anyrun".source = ./dotfiles/anyrun;
     "bat".source = ./dotfiles/bat;
     "foot".source = ./dotfiles/foot;
-    "ghostty".source = ./dotfiles/ghostty;
     "waybar".source = ./dotfiles/waybar;
     "yazi".source = ./dotfiles/yazi;
     "neofetch".source = ./dotfiles/neofetch;
