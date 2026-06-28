@@ -129,13 +129,6 @@ in
 
   programs.home-manager.enable = true;
 
-  # programs.chromium = {
-  #   enable = true;
-  #   extensions = [
-  #     "eimadpbcbfnmbkopoojfekhnkhdbieeh" # DarkReader
-  #   ];
-  # };
-
   programs.git = {
     enable = true;
     settings = {
@@ -156,11 +149,10 @@ in
     gitCredentialHelper.enable = true;
   };
 
-  # Set the system-wide color scheme preference to dark.
-  # This is the modern way to signal dark mode to apps like Chromium.
+  # Set the system-wide color scheme preference to light.
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      "color-scheme" = "prefer-dark";
+      "color-scheme" = "prefer-light";
     };
   };
 
