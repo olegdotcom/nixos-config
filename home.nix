@@ -87,7 +87,7 @@ in
     hyprshot
 
     # Development
-    gemini-cli
+    codex
     nil
     nixpkgs-fmt
     lua-language-server
