@@ -7,9 +7,9 @@ return {
 			require("headlines").setup({
 				markdown = {
 					checkboxes = {
-						["unchecked"] = "☐", -- maps `markup.list.unchecked`
-						["checked"] = "☑", -- maps `markup.list.checked`
-						["partial"] = "⛝", -- optional
+						["unchecked"] = "☐",
+						["checked"] = "☑",
+						["partial"] = "⛝",
 					},
 				},
 			})

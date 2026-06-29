@@ -36,7 +36,6 @@ window#waybar {
     background: #4C566A;
 }
 
-/* Give the native power-profile widget the same card styling as other modules. */
 #power-profiles-daemon,
 #temperature,
 #cpu,
@@ -55,18 +54,17 @@ window#waybar {
 }
 
 #battery.charging {
-    color: #A3BE8C; /* Green */
+    color: #A3BE8C;
 }
 
 #battery.warning {
-    color: #EBCB8B; /* Yellow */
+    color: #EBCB8B;
 }
 
 #battery.critical {
-    color: #BF616A; /* Red */
+    color: #BF616A;
 }
 
-/* Shared layout for the native power-profile widget. */
 #power-profiles-daemon {
     padding: 2px 12px;
     margin: 6px 3px;
@@ -74,15 +72,14 @@ window#waybar {
     border-radius: 8px;
 }
 
-/* Color each profile so the active power policy is recognizable at a glance. */
 #power-profiles-daemon.performance {
-    color: #BF616A; /* Red */
+    color: #BF616A;
 }
 
 #power-profiles-daemon.balanced {
-    color: #EBCB8B; /* Yellow */
+    color: #EBCB8B;
 }
 
 #power-profiles-daemon.power-saver {
-    color: #A3BE8C; /* Green */
+    color: #A3BE8C;
 } 

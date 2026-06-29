@@ -7,26 +7,22 @@
 
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
-  # Enable redistributable firmware. The Framework hardware module also
-  # supplies the AMD graphics/initrd setup and enables fwupd for this laptop.
+  # The Framework module also configures AMD graphics, the initrd, and fwupd.
   hardware.enableRedistributableFirmware = true;
 
-  # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
-  # Keep only twenty boot entries so old kernels do not fill the 510 MiB EFI partition.
+  # Prevent old kernels from filling the 510 MiB EFI partition.
   boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Enable the standard NixOS laptop power-management settings.
   powerManagement.enable = true;
-  # Provide the D-Bus service used by Waybar to view and change power profiles.
+  # Waybar uses this service to display and change power profiles.
   services.power-profiles-daemon.enable = true;
 
-  # Track the newest kernel for current Framework hardware support.
+  # Track current Framework hardware support.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "oleg-laptop";
@@ -36,15 +32,12 @@
 
   time.timeZone = "America/New_York";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Set keyboard layout system-wide.
-  # This is respected by both the console and Wayland.
+  # Share the keyboard layout between the console and Wayland.
   console.useXkbConfig = true;
   services.xserver.xkb.layout = "us";
 
-  # Enable sound.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -94,10 +87,7 @@
     VISUAL = "nvim";
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
-
-  # Enable greetd, a minimal and flexible login manager, with the wlgreet greeter.
+  # Retain the greetd configuration for future use; the service is disabled.
   services.greetd = {
     enable = false;
     settings = {
@@ -128,14 +118,11 @@
     "flakes"
   ];
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile.
-  # You can use https://search.nixos.org/ to find more packages (and options).
-  # Desktop and user tools live in Home Manager below; only system-level tools
-  # remain here. Neovim is system-wide so root can use it, and Tuigreet stays
-  # installed while greetd is temporarily disabled.
+  # User applications live in Home Manager; keep only system-level tools here.
+  # Neovim remains system-wide for root, and Tuigreet supports the retained
+  # greetd configuration.
   environment.systemPackages = with pkgs; [
     neovim
     wget
@@ -147,7 +134,6 @@
 
   fileSystems =
     let
-      # Mounting options.
       cifsOptions = [
         "credentials=/etc/nixos/smb-credentials"
         "uid=${toString config.users.users.oleg.uid}"
@@ -159,7 +145,6 @@
         "x-systemd.mount-timeout=10s"
         "noauto"
       ];
-      # Function to generate a mount point configuration.
       mkCifsMount = share: {
         device = "//nas.local/${share}";
         fsType = "cifs";
@@ -183,13 +168,12 @@
 
     settings = {
       options = {
-        # LAN-only hardening: use only the NAS's explicit address.
+        # Connect only through the NAS's explicit LAN address.
         globalAnnounceEnabled = false;
         relaysEnabled = false;
         natEnabled = false;
-        # Do not broadcast this laptop through local Syncthing discovery.
         localAnnounceEnabled = false;
-        urAccepted = -1; # disable usage reporting
+        urAccepted = -1; # Disable usage reporting.
       };
 
       devices = {
@@ -207,7 +191,6 @@
           devices = [ "nas" ];
           type = "sendreceive";
 
-          # Important settings
           ignorePerms = true;
           fsWatcherEnabled = true;
         };

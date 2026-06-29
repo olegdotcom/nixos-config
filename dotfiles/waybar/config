@@ -4,7 +4,6 @@
 	"height": 38,
 	"modules-left": ["hyprland/workspaces"],
 	"modules-center": [],
-	// Use Waybar's built-in power-profile module instead of polling a custom script.
 	"modules-right": ["power-profiles-daemon", "temperature", "cpu", "memory", "tray", "bluetooth", "backlight", "pulseaudio", "battery", "clock"],
 	"hyprland/workspaces": {
 			"disable-scroll": true,
@@ -57,9 +56,8 @@
 		"on-click": "foot btm"
 	},
 	"temperature": {
-		// Use the stable PCI device path; /sys/class/hwmon/hwmonN numbers can change.
+		// Use the stable PCI path because hwmonN numbers can change.
 		"hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
-		// temp1_input is the CPU's Tctl sensor within that device directory.
 		"input-filename": "temp1_input",
 		"critical-threshold": 80,
 		"format-critical": "{icon} {temperatureC}°C",
@@ -90,7 +88,6 @@
 			"format-alt": "{:%Y-%m-%d}",
 			"format": "{:%a %b %d %H:%M}"
 	},
-	// This native module cycles profiles on click through power-profiles-daemon.
 	"power-profiles-daemon": {
 		"format": "{icon}",
 		"tooltip-format": "Power profile: {profile}\nDriver: {driver}",

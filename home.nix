@@ -9,13 +9,12 @@
 
   home.packages = with pkgs; [
     # Core
-    # Fastfetch intentionally has no managed config, so it uses its defaults.
     fastfetch
     ripgrep
     jq
     fzf
     which
-    libva-utils # For checking hardware video acceleration (vainfo)
+    libva-utils # VA-API diagnostics.
     procps
     usbutils
     bat
@@ -33,20 +32,15 @@
     anyrun
     waybar
     hyprpaper
-    pavucontrol # Volume control for waybar
-    # PipeWire supplies PulseAudio compatibility, so the PulseAudio server package is unnecessary.
+    pavucontrol
     networkmanagerapplet
     hyprshot
 
     # Development
     codex
     nil
-    # Official Nix formatter, used directly by editors and command-line tools.
     nixfmt
-    # The Neovim 0.12-compatible nvim-treesitter branch uses the Tree-sitter
-    # command-line tool to install and update language parsers. Keeping the
-    # tool here makes it part of the reproducible Home Manager environment
-    # instead of letting an editor plugin install an unmanaged executable.
+    # Parser compiler used by nvim-treesitter.
     tree-sitter
     lua-language-server
     gopls
@@ -55,13 +49,13 @@
     delve
     nodejs
     vscode-js-debug
-    # Include debugpy in the Python environment used by nvim-dap-python.
+    # nvim-dap-python locates debugpy through this interpreter.
     (python3.withPackages (pythonPackages: [ pythonPackages.debugpy ]))
 
     # Messaging
     signal-desktop
 
-    # archives
+    # Archives
     zip
     xz
     unzip
@@ -103,8 +97,7 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    # No installed plugins require Neovim's legacy Python or Ruby providers.
-    # Setting these explicitly also prevents state-version migration warnings.
+    # Disable unused legacy language providers.
     withPython3 = false;
     withRuby = false;
   };
@@ -114,15 +107,14 @@
     gitCredentialHelper.enable = true;
   };
 
-  # Set the system-wide color scheme preference to light.
+  # Prefer light themes in applications that respect the GNOME setting.
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       "color-scheme" = "prefer-light";
     };
   };
 
-  # Declaratively manage config files
-  # There is deliberately no Fastfetch/Neofetch entry: Fastfetch uses defaults.
+  # Deploy native application configs through Home Manager.
   xdg.configFile = {
     "nvim".source = ./dotfiles/nvim;
     "hypr".source = ./dotfiles/hypr;
@@ -146,7 +138,6 @@
     settings = {
       keymap_mode = "vim-insert";
     };
-    # Atuin's home-manager module automatically handles shell integration.
   };
 
   programs.zoxide = {
@@ -164,7 +155,7 @@
     };
   };
 
-  # Rebuild bat cache after theme changes
+  # Rebuild the bat cache after theme changes.
   home.activation.rebuildBatCache = ''
     ${pkgs.bat}/bin/bat cache --build
   '';

@@ -28,9 +28,7 @@ return {
 			}
 			local FileName = {
 				provider = function()
-					-- local bufname = vim.api.nvim_buf_get_name(0)
-					-- local filename = vim.fs.basename(bufname) -- base file name
-					local filename = vim.fn.expand("%:~") -- full file name
+					local filename = vim.fn.expand("%:~")
 					return " " .. filename .. " "
 				end,
 				hl = { fg = "lightblue", bold = true },
@@ -42,7 +40,8 @@ return {
 				provider = "[+]",
 				hl = { fg = "lightblue", bold = true },
 			}
-			local Align = { provider = "%=" } -- pushes content to the right
+			-- Push the remaining components to the right.
+			local Align = { provider = "%=" }
 			local FilePercent = {
 				provider = function()
 					local curr = vim.fn.line(".")

@@ -27,7 +27,7 @@ return {
 			vim.fn.sign_define("DapStopped", {
 				text = "🟢",
 				texthl = "DapStopped",
-				linehl = "Visual", -- optional highlight of the entire line
+				linehl = "Visual",
 				numhl = "",
 			})
 		end,
@@ -61,7 +61,7 @@ return {
 		"mfussenegger/nvim-dap-python",
 		ft = "python",
 		config = function()
-			-- Use the Nix-managed Python containing debugpy instead of a macOS Homebrew path.
+			-- Use the Nix-managed Python environment that includes debugpy.
 			require("dap-python").setup(vim.fn.exepath("python3"))
 		end,
 	},

@@ -1,32 +1,24 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- Window splitting.
+-- Windows
 map("n", "<leader>-", "<cmd>split<CR>", { desc = "Horizontal split", unpack(opts) })
 map("n", "<leader>|", "<cmd>vsplit<CR>", { desc = "Vertical split", unpack(opts) })
-
--- Navigating windows.
 map("n", "<C-h>", "<C-w>h", opts)
 map("n", "<C-j>", "<C-w>j", opts)
 map("n", "<C-k>", "<C-w>k", opts)
 map("n", "<C-l>", "<C-w>l", opts)
 
--- Jump half a screen down/up and center
+-- Keep navigation targets centered.
 map("n", "<C-d>", "<C-d>zz", { desc = "Half screen down and center", unpack(opts) })
 map("n", "<C-u>", "<C-u>zz", { desc = "Half screen up and center", unpack(opts) })
-
--- Find and center
 map("n", "n", "nzz", { desc = "Find next and center", unpack(opts) })
 map("n", "N", "Nzz", { desc = "Find prev and center", unpack(opts) })
 
--- Copy and paste
+-- Editing
 map("x", "<leader>p", '"_dP', { desc = "Paste without losing yank", unpack(opts) })
--- map({ "n", "x" }, "<leader>p", '"+p', { desc = "Paste from system clipboard", unpack(opts) })
--- map({ "n", "x" }, "<leader>y", '"+y', { desc = "Copy to system clipboard", unpack(opts) })
-
 map("n", "U", "<C-r>", { desc = "Redo", unpack(opts) })
 
--- Comments
 map("n", "<leader>/", function()
 	require("Comment.api").toggle.linewise.current()
 end, { desc = "Toggle comment", unpack(opts) })
@@ -36,7 +28,7 @@ map("v", "<leader>/", function()
 	require("Comment.api").toggle.linewise(vim.fn.visualmode())
 end, { desc = "Toggle comment (visual mode)", unpack(opts) })
 
--- FZF
+-- Fuzzy finding
 map("n", "<leader>ff", require("fzf-lua").files, { desc = "FZF files", unpack(opts) })
 map("n", "<leader>fb", require("fzf-lua").buffers, { desc = "FZF buffer", unpack(opts) })
 map("n", "<leader>fh", require("fzf-lua").help_tags, { desc = "FZF help", unpack(opts) })

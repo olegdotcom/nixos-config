@@ -5,7 +5,7 @@ return {
 		priority = 1000,
 		config = function()
 			require("catppuccin").setup({
-				flavour = "mocha", -- options: latte, frappe, macchiato, mocha
+				flavour = "mocha",
 			})
 			vim.cmd.colorscheme("catppuccin")
 			vim.api.nvim_set_hl(0, "@markup.list.checked", { link = "String" })
@@ -29,11 +29,7 @@ return {
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
+		opts = {},
 		keys = {
 			{
 				"<leader>?",
