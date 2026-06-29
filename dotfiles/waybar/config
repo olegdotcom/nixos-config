@@ -4,7 +4,8 @@
 	"height": 38,
 	"modules-left": ["hyprland/workspaces"],
 	"modules-center": [],
-	"modules-right": ["custom/power", "temperature", "cpu", "memory", "tray", "bluetooth", "backlight", "pulseaudio", "battery", "clock"],
+	// Use Waybar's built-in power-profile module instead of polling a custom script.
+	"modules-right": ["power-profiles-daemon", "temperature", "cpu", "memory", "tray", "bluetooth", "backlight", "pulseaudio", "battery", "clock"],
 	"hyprland/workspaces": {
 			"disable-scroll": true,
 			"all-outputs": true,
@@ -40,7 +41,8 @@
 		"on-click": "foot bluetui"
 	},
 	"backlight": {
-		"device": "intel_backlight",
+		// This Framework laptop exposes its internal panel as amdgpu_bl1.
+		"device": "amdgpu_bl1",
 		"format": "{icon} {percent}%",
 		"format-icons": [""]
 	},
@@ -55,7 +57,10 @@
 		"on-click": "foot btm"
 	},
 	"temperature": {
-		"hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+		// Use the stable PCI device path; /sys/class/hwmon/hwmonN numbers can change.
+		"hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+		// temp1_input is the CPU's Tctl sensor within that device directory.
+		"input-filename": "temp1_input",
 		"critical-threshold": 80,
 		"format-critical": "{icon} {temperatureC}°C",
 		"format": "{icon} {temperatureC}°C",
@@ -85,11 +90,15 @@
 			"format-alt": "{:%Y-%m-%d}",
 			"format": "{:%a %b %d %H:%M}"
 	},
-    "custom/power": {
-        "format": "{}",
-        "exec": "power-profile-switch",
-        "return-type": "json",
-        "on-click": "power-profile-switch switch",
-        "interval": 3
-    }
-} 
+	// This native module cycles profiles on click through power-profiles-daemon.
+	"power-profiles-daemon": {
+		"format": "{icon}",
+		"tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+		"format-icons": {
+			"default": "?",
+			"performance": "🚀",
+			"balanced": "⚖️",
+			"power-saver": "🌿"
+		}
+	}
+	}

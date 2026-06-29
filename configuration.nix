@@ -11,31 +11,28 @@
     ./hardware-configuration.nix
   ];
 
-  # Enable firmware updates for hardware.
+  # Enable redistributable firmware. The Framework hardware module also
+  # supplies the AMD graphics/initrd setup and enables fwupd for this laptop.
   hardware.enableRedistributableFirmware = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
+  # Keep only twenty boot entries so old kernels do not fill the 510 MiB EFI partition.
+  boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Enable the standard NixOS laptop power-management settings.
   powerManagement.enable = true;
-  boot.kernelParams = [
-    # Slow sleep to save battery
-    "mem_sleep_default=deep"
-  ];
+  # Provide the D-Bus service used by Waybar to view and change power profiles.
+  services.power-profiles-daemon.enable = true;
 
-  # Use latest kernel.
+  # Track the newest kernel for current Framework hardware support.
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # Explicitly load amdgpu driver for VRR and Wayland.
-  boot.kernelModules = [ "amdgpu" ];
-  boot.initrd.availableKernelModules = [ "amdgpu" ];
-
-  # Firmware updater.
-  services.fwupd.enable = true;
 
   networking.hostName = "oleg-laptop";
   networking.networkmanager.enable = true;
+  # Resolve the NAS without mDNS/Avahi, which avoids opening UDP 5353 globally.
+  networking.hosts."192.168.10.12" = [ "nas.local" ];
 
   time.timeZone = "America/New_York";
 
@@ -43,7 +40,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Set keyboard layout system-wide.
-  # This is respected by both the console and Wayland/X11.
+  # This is respected by both the console and Wayland.
   console.useXkbConfig = true;
   services.xserver.xkb.layout = "us";
 
@@ -69,12 +66,9 @@
     };
   };
 
-  hardware.graphics = {
-    enable = true;
-  };
-
   programs.hyprland = {
     enable = true;
+    # Explicitly disable the X compatibility server for a Wayland-only session.
     xwayland.enable = false;
   };
 
@@ -86,9 +80,11 @@
   ];
 
   environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
+    # Ask Chromium/Electron applications to prefer their native Wayland backend.
     NIXOS_OZONE_WL = "1";
+    # Ask SDL applications to render directly through Wayland.
     SDL_VIDEODRIVER = "wayland";
+    # Require the native Wayland backend for Qt and GTK applications.
     QT_QPA_PLATFORM = "wayland";
     GDK_BACKEND = "wayland";
   };
@@ -114,13 +110,6 @@
     };
   };
 
-  # Enable Avahi for mDNS, allowing .local domain resolution for the NAS.
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true; # For IPv4
-    nssmdns6 = true; # For IPv6
-  };
-
   users.users.oleg = {
     isNormalUser = true;
     home = "/home/oleg";
@@ -144,16 +133,15 @@
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
+  # Desktop and user tools live in Home Manager below; only system-level tools
+  # remain here. Neovim is system-wide so root can use it, and Tuigreet stays
+  # installed while greetd is temporarily disabled.
   environment.systemPackages = with pkgs; [
     neovim
-    networkmanager
     wget
     git
-    wayland
-    xdg-desktop-portal-hyprland
     tuigreet
     nushell
-    hyprlock
     cifs-utils
   ];
 
@@ -188,17 +176,19 @@
     enable = true;
     user = "oleg";
     dataDir = "/home/oleg";
-    configDir = "/home/oleg/.config/syncthing";
 
-    openDefaultPorts = true;
+    # The NAS has an explicit address, so no inbound ports or discovery
+    # broadcasts are needed on public networks.
+    openDefaultPorts = false;
 
     settings = {
       options = {
-        # LAN-only hardening
+        # LAN-only hardening: use only the NAS's explicit address.
         globalAnnounceEnabled = false;
         relaysEnabled = false;
         natEnabled = false;
-        localAnnounceEnabled = true;
+        # Do not broadcast this laptop through local Syncthing discovery.
+        localAnnounceEnabled = false;
         urAccepted = -1; # disable usage reporting
       };
 
@@ -228,30 +218,11 @@
   # First NixOS version installed on this machine.
   system.stateVersion = "25.05";
 
-  # Automatically run garbage collection daily to clean the Nix store.
+  # Run garbage collection weekly. It first removes profile generations older
+  # than 30 days, then deletes store paths that are no longer referenced.
   nix.gc = {
     automatic = true;
-    dates = "daily";
-  };
-
-  # Automatically delete all but the last 10 generations daily.
-  systemd.services.cleanup-generations = {
-    description = "Clean up old NixOS generations";
-    script = ''
-      ${pkgs.nix}/bin/nix-env -p /nix/var/nix/profiles/system --delete-generations +50
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      User = "root";
-    };
-  };
-
-  systemd.timers.cleanup-generations = {
-    description = "Daily timer for cleaning up old NixOS generations";
-    timerConfig = {
-      OnCalendar = "daily";
-      Persistent = true;
-    };
-    wantedBy = [ "timers.target" ];
+    dates = "weekly";
+    options = "--delete-older-than 30d";
   };
 }

@@ -20,5 +20,6 @@ require("lazy").setup({
   spec = {
     { import = "plugins" },
   },
-  lockfile = vim.fn.expand("~") .. "/repo/nixos-config/dotfiles/nvim/lazy-lock.json",
+  -- Keep plugin version updates in the tracked repository, not the read-only Nix store symlink.
+  lockfile = vim.fn.expand("~") .. "/core/repo/nixos-config/dotfiles/nvim/lazy-lock.json",
 })

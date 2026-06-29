@@ -1,67 +1,20 @@
 {
-  config,
   pkgs,
   ...
 }:
 
-let
-  power-profile-script = pkgs.writeShellScriptBin "power-profile-switch" ''
-    #!${pkgs.runtimeShell}
-
-    # Get the current profile and set the corresponding icon
-    get_profile() {
-        PROFILE=$(${pkgs.power-profiles-daemon}/bin/powerprofilesctl get)
-        case "$PROFILE" in
-            performance)
-                ICON="🚀"
-                ;;
-            balanced)
-                ICON="⚖️"
-                ;;
-            power-saver)
-                ICON="🌿"
-                ;;
-            *)
-                ICON="?"
-                ;;
-        esac
-    }
-
-    # Handle the click event to switch profiles
-    case "$1" in
-        switch)
-            CURRENT_PROFILE=$(${pkgs.power-profiles-daemon}/bin/powerprofilesctl get)
-            case "$CURRENT_PROFILE" in
-                performance)
-                    ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set power-saver
-                    ;;
-                balanced)
-                    ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set performance
-                    ;;
-                power-saver)
-                    ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set balanced
-                    ;;
-            esac
-            ;;
-    esac
-
-    # Get the current state and output JSON for Waybar
-    get_profile
-    printf '{"text": "%s", "tooltip": "Power Profile: %s", "class": "%s"}\n' "$ICON" "$PROFILE" "$PROFILE"
-  '';
-in
 {
   home.username = "oleg";
   home.homeDirectory = "/home/oleg";
 
   home.packages = with pkgs; [
     # Core
+    # Fastfetch intentionally has no managed config, so it uses its defaults.
     fastfetch
     ripgrep
     jq
     fzf
     which
-    gh
     libva-utils # For checking hardware video acceleration (vainfo)
     procps
     usbutils
@@ -73,7 +26,7 @@ in
     zoxide
 
     # Hyprland ecosystem
-    hyprland
+    # Hyprland itself is installed by programs.hyprland in configuration.nix.
     hyprlock
     hypridle
     foot
@@ -81,18 +34,29 @@ in
     waybar
     hyprpaper
     pavucontrol # Volume control for waybar
-    pulseaudio
+    # PipeWire supplies PulseAudio compatibility, so the PulseAudio server package is unnecessary.
     networkmanagerapplet
-    dconf
     hyprshot
 
     # Development
     codex
     nil
-    nixpkgs-fmt
+    # Official Nix formatter, used directly by editors and command-line tools.
+    nixfmt
+    # The Neovim 0.12-compatible nvim-treesitter branch uses the Tree-sitter
+    # command-line tool to install and update language parsers. Keeping the
+    # tool here makes it part of the reproducible Home Manager environment
+    # instead of letting an editor plugin install an unmanaged executable.
+    tree-sitter
     lua-language-server
     gopls
     llvmPackages.clang
+    # Debug adapters used by the Neovim DAP configuration.
+    delve
+    nodejs
+    vscode-js-debug
+    # Include debugpy in the Python environment used by nvim-dap-python.
+    (python3.withPackages (pythonPackages: [ pythonPackages.debugpy ]))
 
     # Messaging
     signal-desktop
@@ -118,9 +82,6 @@ in
     bolt
     bluetui
 
-    # Custom scripts
-    power-profile-script
-
     # Browser
     ungoogled-chromium
   ];
@@ -142,6 +103,10 @@ in
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+    # No installed plugins require Neovim's legacy Python or Ruby providers.
+    # Setting these explicitly also prevents state-version migration warnings.
+    withPython3 = false;
+    withRuby = false;
   };
 
   programs.gh = {
@@ -157,6 +122,7 @@ in
   };
 
   # Declaratively manage config files
+  # There is deliberately no Fastfetch/Neofetch entry: Fastfetch uses defaults.
   xdg.configFile = {
     "nvim".source = ./dotfiles/nvim;
     "hypr".source = ./dotfiles/hypr;
@@ -165,7 +131,6 @@ in
     "foot".source = ./dotfiles/foot;
     "waybar".source = ./dotfiles/waybar;
     "yazi".source = ./dotfiles/yazi;
-    "neofetch".source = ./dotfiles/neofetch;
   };
 
   programs.nushell = {

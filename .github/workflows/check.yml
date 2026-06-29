@@ -1,0 +1,30 @@
+# Evaluate the flake and enforce formatting on every proposed or merged change.
+name: Check
+
+on:
+  # Validate contributions before they are merged.
+  pull_request:
+  # Also validate direct updates to the main branch.
+  push:
+    branches:
+      - main
+
+permissions:
+  # The workflow only needs permission to read the repository.
+  contents: read
+
+jobs:
+  flake:
+    # GitHub's Linux runner matches this configuration's x86_64-linux platform.
+    runs-on: ubuntu-latest
+    steps:
+      # Download the repository into the runner.
+      - uses: actions/checkout@v6
+      # Install Nix with flakes enabled.
+      - uses: DeterminateSystems/determinate-nix-action@v3
+      - name: Check flake
+        # Evaluate every flake output without building the complete laptop closure.
+        run: nix flake check --no-build
+      - name: Check formatting
+        # `--ci` reports unformatted files without changing them.
+        run: nix fmt -- --ci

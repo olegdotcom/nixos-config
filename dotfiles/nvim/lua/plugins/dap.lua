@@ -55,7 +55,8 @@ return {
     "mfussenegger/nvim-dap-python",
     ft = "python",
     config = function()
-      require("dap-python").setup("/opt/homebrew/bin/python3") -- change if needed
+      -- Use the Nix-managed Python containing debugpy instead of a macOS Homebrew path.
+      require("dap-python").setup(vim.fn.exepath("python3"))
     end,
   },
 
@@ -75,7 +76,8 @@ return {
     config = function()
       local dap = require("dap")
       require("dap-vscode-js").setup({
-        debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
+        -- Nixpkgs installs Microsoft's adapter as the `js-debug` executable.
+        debugger_cmd = { "js-debug" },
         adapters = { "pwa-node" },
       })
       for _, lang in ipairs({ "typescript", "javascript" }) do
