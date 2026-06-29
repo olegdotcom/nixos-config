@@ -1,20 +1,20 @@
 vim.opt.termguicolors = true
 
 -- Set tab width to 2 spaces
-vim.opt.tabstop = 2           -- How many columns a <Tab> counts for
-vim.opt.shiftwidth = 2        -- Indent amount when using >>, <<, ==
-vim.opt.expandtab = true      -- Convert tabs to spaces
+vim.opt.tabstop = 2 -- How many columns a <Tab> counts for
+vim.opt.shiftwidth = 2 -- Indent amount when using >>, <<, ==
+vim.opt.expandtab = true -- Convert tabs to spaces
 
-vim.opt.number = true         -- show absolute line number on the current line
+vim.opt.number = true -- show absolute line number on the current line
 vim.opt.relativenumber = true -- show relative line numbers on all other lines
 
 -- vim.opt.colorcolumn = "81" -- shows the column after the 80th char
 
-vim.o.scrolloff = 10     -- for vertical scrolling
+vim.o.scrolloff = 10 -- for vertical scrolling
 vim.o.sidescrolloff = 10 -- for horizontal scrolling
 
 -- Markdown
-vim.o.conceallevel = 2     -- fancy rendering for markdown
+vim.o.conceallevel = 2 -- fancy rendering for markdown
 vim.o.concealcursor = "nc" -- Normal and Command mode
 
 -- Hide command line.
