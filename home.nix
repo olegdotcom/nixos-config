@@ -83,10 +83,16 @@
 
   programs.chromium = {
     enable = true;
-    package = pkgs.ungoogled-chromium;
+    package = pkgs.chromium;
 
     commandLineArgs = [
       "--enable-features=VerticalTabs"
+    ];
+    extensions = [
+      # DarkReader
+      "eimadpbcbfnmbkopoojfekhnkhdbieeh"
+      # Catppuccin
+      "bkkmolkhemgaeaeggcmfbghljjjoofoh"
     ];
   };
 
