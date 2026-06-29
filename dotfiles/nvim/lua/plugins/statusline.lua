@@ -8,7 +8,7 @@ return {
 					local mode = vim.api.nvim_get_mode().mode
 					return string.format(" %s ", mode:upper())
 				end,
-				hl = { fg = "black", bg = "lightblue", bold = true },
+				hl = { bold = true },
 			}
 			local Git = {
 				condition = function()
@@ -21,24 +21,21 @@ return {
 					local removed = gsd.removed or 0
 					return string.format("  %s(+%d -%d ~%d)", vim.b.gitsigns_head, added, removed, changed)
 				end,
-				hl = {
-					fg = "lightgreen",
-					bold = true,
-				},
+				hl = { bold = true },
 			}
 			local FileName = {
 				provider = function()
 					local filename = vim.fn.expand("%:~")
 					return " " .. filename .. " "
 				end,
-				hl = { fg = "lightblue", bold = true },
+				hl = { bold = true },
 			}
 			local FileModified = {
 				condition = function()
 					return vim.bo.modified
 				end,
 				provider = "[+]",
-				hl = { fg = "lightblue", bold = true },
+				hl = { bold = true },
 			}
 			-- Push the remaining components to the right.
 			local Align = { provider = "%=" }
@@ -52,10 +49,11 @@ return {
 					local percent = math.floor((curr / total) * 100)
 					return string.format(" %d%%%% ", percent)
 				end,
-				hl = { fg = "lightblue", bold = true },
+				hl = { bold = true },
 			}
 			require("heirline").setup({
 				statusline = {
+					hl = "StatusLine",
 					Mode,
 					Git,
 					FileName,

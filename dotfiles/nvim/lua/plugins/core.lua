@@ -1,13 +1,16 @@
 return {
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
+		"Mofiqul/vscode.nvim",
+		name = "vscode.nvim",
 		priority = 1000,
 		config = function()
-			require("catppuccin").setup({
-				flavour = "mocha",
+			require("vscode").setup({
+				style = "light",
+				transparent = false,
+				terminal_colors = true,
+				disable_nvimtree_bg = true,
 			})
-			vim.cmd.colorscheme("catppuccin")
+			vim.cmd.colorscheme("vscode")
 			vim.api.nvim_set_hl(0, "@markup.list.checked", { link = "String" })
 			vim.api.nvim_set_hl(0, "@markup.list.unchecked", { link = "Comment" })
 		end,

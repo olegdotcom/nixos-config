@@ -75,26 +75,13 @@
     brightnessctl
     bolt
     bluetui
+
+    ungoogled-chromium
   ];
 
   home.stateVersion = "25.05";
 
   programs.home-manager.enable = true;
-
-  programs.chromium = {
-    enable = true;
-    package = pkgs.chromium;
-
-    commandLineArgs = [
-      "--enable-features=VerticalTabs"
-    ];
-    extensions = [
-      # DarkReader
-      "eimadpbcbfnmbkopoojfekhnkhdbieeh"
-      # Catppuccin
-      "bkkmolkhemgaeaeggcmfbghljjjoofoh"
-    ];
-  };
 
   programs.git = {
     enable = true;
@@ -119,10 +106,10 @@
     gitCredentialHelper.enable = true;
   };
 
-  # Prefer dark themes in applications that respect the GNOME setting.
+  # Prefer light themes in applications that respect the GNOME setting.
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      "color-scheme" = "prefer-dark";
+      "color-scheme" = "prefer-light";
     };
   };
 
@@ -142,6 +129,7 @@
     settings = {
       show_banner = false;
       edit_mode = "vi";
+      ls.use_ls_colors = false;
     };
   };
 
