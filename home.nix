@@ -113,10 +113,10 @@
     gitCredentialHelper.enable = true;
   };
 
-  # Prefer light themes in applications that respect the GNOME setting.
+  # Prefer dark themes in applications that respect the GNOME setting.
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      "color-scheme" = "prefer-light";
+      "color-scheme" = "prefer-dark";
     };
   };
 
