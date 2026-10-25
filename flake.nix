@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
       # Use this flake's nixpkgs revision instead of downloading a second one.
@@ -19,6 +24,7 @@
   outputs =
     {
       nixpkgs,
+      disko,
       nixos-hardware,
       home-manager,
       ...
@@ -28,6 +34,8 @@
         system = "x86_64-linux";
         modules = [
           nixos-hardware.nixosModules.framework-amd-ai-300-series
+          disko.nixosModules.disko
+          ./disk-config.nix
           ./configuration.nix
           home-manager.nixosModules.home-manager
           {

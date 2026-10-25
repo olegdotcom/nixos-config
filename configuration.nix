@@ -14,9 +14,12 @@
   hardware.enableRedistributableFirmware = true;
 
   boot.loader.systemd-boot.enable = true;
-  # Prevent old kernels from filling the 510 MiB EFI partition.
+  # Match the normal system-generation retention limit below.
   boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
+  # On UEFI, systemd can discover the hibernation swapfile and resume offset
+  # through HibernateLocation instead of a hard-coded resume_offset.
+  boot.initrd.systemd.enable = true;
 
   powerManagement.enable = true;
   # Waybar uses this service to display and change power profiles.
@@ -201,11 +204,16 @@
   # First NixOS version installed on this machine.
   system.stateVersion = "25.05";
 
-  # Run garbage collection weekly. It first removes profile generations older
-  # than 30 days, then deletes store paths that are no longer referenced.
+  # Prune system history by count, then collect unreferenced paths daily.
   nix.gc = {
     automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
+    dates = "daily";
+    options = "";
   };
+
+  systemd.services.nix-gc.preStart = ''
+    ${config.nix.package}/bin/nix-env \
+      --profile /nix/var/nix/profiles/system \
+      --delete-generations +20
+  '';
 }
