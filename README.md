@@ -80,14 +80,40 @@ Apply these repository changes before following this procedure. If preparing
 them on another computer, commit/push your installation branch and clone that
 branch on the installer. Otherwise make the edits in the live environment.
 
-Boot the installer in UEFI mode and connect to the network, then open a root
-shell and fetch the config:
+Boot the installer in UEFI mode and connect to the network. Enter an interactive
+root shell with the installation tools in one command:
 
 ```sh
-sudo -i
+sudo -i nix-shell -p git neovim
+```
+
+Run every installation command below, through `reboot`, inside this same shell.
+`nix-shell` provides tools; it does not grant root privileges on its own. Check
+the effective user ID before proceeding; this must print `0`:
+
+```sh
+id -u
+```
+
+Enable flakes inside this root shell:
+
+```sh
 export NIX_CONFIG='experimental-features = nix-command flakes'
-nix-shell -p git neovim
+```
+
+For a fresh attempt, fetch the config:
+
+```sh
 git clone https://github.com/olegdotcom/nixos-config.git /tmp/nixos-config
+cd /tmp/nixos-config
+```
+
+If `/tmp/nixos-config` already exists from an earlier attempt, preserve that
+clone and its disk-device edits. Instead of cloning again, run these commands
+inside the root shell so Git and subsequent builds use a root-owned workspace:
+
+```sh
+chown -R root:root /tmp/nixos-config
 cd /tmp/nixos-config
 ```
 
@@ -111,20 +137,26 @@ nix flake lock
 git add flake.lock
 nix flake check --no-build
 nix build .#nixosConfigurations.oleg-laptop.config.system.build.diskoScript \
-  --out-link /tmp/disko-script
+  --out-link ./disko-script
 ```
+
+The build-result symlink lives inside the root-owned repository directory.
+Building and running it in the same root shell keeps ownership consistent
+throughout installation and avoids the shared `/tmp` symlink restriction.
 
 Building this script does not format anything. It uses the Disko version pinned
 by this flake. Inspect it and confirm that the configured by-id path resolves to
 the intended disk. The next command **wipes, formats, and mounts that disk**;
-Disko prompts for a new LUKS passphrase:
+Disko prompts for a new LUKS passphrase. Run it only for the initial formatting,
+not when resuming an installation whose filesystems are already mounted:
 
 ```sh
-/tmp/disko-script
+./disko-script
 ```
 
-The filesystems should now be mounted below `/mnt`. Generate hardware detection
-without duplicate filesystem/LUKS declarations:
+Continue only after Disko finishes successfully. The filesystems should now be
+mounted below `/mnt`. Generate hardware detection without duplicate
+filesystem/LUKS declarations:
 
 ```sh
 findmnt -R /mnt
@@ -134,10 +166,11 @@ git add hardware-configuration.nix
 nix flake check --no-build
 ```
 
-Keep the repository at the location expected by the existing Neovim config,
-then install from that copy:
+Remove the temporary build-result symlink, then copy the repository to the
+location expected by the existing Neovim config and install from that copy:
 
 ```sh
+rm -f ./disko-script
 mkdir -p /mnt/home/oleg/core/repo/nixos-config
 cp -a /tmp/nixos-config/. /mnt/home/oleg/core/repo/nixos-config/
 nixos-install --flake /mnt/home/oleg/core/repo/nixos-config#oleg-laptop
