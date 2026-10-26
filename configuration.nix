@@ -17,9 +17,6 @@
   # Match the normal system-generation retention limit below.
   boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
-  # On UEFI, systemd can discover the hibernation swapfile and resume offset
-  # through HibernateLocation instead of a hard-coded resume_offset.
-  boot.initrd.systemd.enable = true;
 
   powerManagement.enable = true;
   # Waybar uses this service to display and change power profiles.
@@ -189,11 +186,10 @@
       };
 
       folders = {
-        core = {
-          path = "/home/oleg/core";
+        dump = {
+          path = "/home/oleg/dump";
           devices = [ "nas" ];
-          type = "sendreceive";
-
+          type = "receiveonly";
           ignorePerms = true;
           fsWatcherEnabled = true;
         };
