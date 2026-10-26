@@ -76,7 +76,7 @@
     bolt
     bluetui
 
-    ungoogled-chromium
+    chromium
   ];
 
   home.stateVersion = "25.05";
