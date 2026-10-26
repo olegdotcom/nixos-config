@@ -2,7 +2,7 @@ let
   # Set this to the whole internal NVMe, not the USB installer or a partition.
   # Discover it with: lsblk -o NAME,SIZE,MODEL,SERIAL,TRAN,MOUNTPOINTS
   # Then select its whole-disk symlink from /dev/disk/by-id/nvme-*.
-  diskDevice = "/dev/disk/by-id/REPLACE_WITH_INTERNAL_NVME_ID";
+  diskDevice = "/dev/disk/by-id/nvme-Samsung_SSD_990_EVO_2TB_S7M4NL0X823829Y";
 
   # Conservative hibernation allocation for this laptop's 128 GiB RAM.
   # The required free swap depends on workload; this is not a kernel minimum.
