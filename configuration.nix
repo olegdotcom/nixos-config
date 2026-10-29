@@ -22,6 +22,13 @@
   # Waybar uses this service to display and change power profiles.
   services.power-profiles-daemon.enable = true;
 
+  # Keep running with an external display; retain normal lid suspend otherwise.
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "suspend";
+    HandleLidSwitchDocked = "ignore";
+  };
+
   # Track current Framework hardware support.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

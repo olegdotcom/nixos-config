@@ -1,0 +1,11 @@
+[pyprland]
+plugins = ["monitors"]
+
+# Keep a rule for the internal panel so relayout can restore it after unplugging.
+[monitors.placement."eDP-1"]
+scale = 2
+
+# Use only the ASUS whenever it is connected, regardless of lid position.
+[monitors.placement."ASUSTek COMPUTER INC PA32QCV TALMSV000428"]
+scale = 2
+disables = ["eDP-1"]
