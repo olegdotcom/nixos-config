@@ -39,7 +39,7 @@
     hyprshot
 
     # Development
-    codex
+    chatgpt
     nil
     nixfmt
     # Parser compiler used by nvim-treesitter.

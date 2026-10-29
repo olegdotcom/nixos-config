@@ -41,9 +41,28 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Share the keyboard layout between the console and Wayland.
+  # Use the same base layout as Hyprland for the console.
   console.useXkbConfig = true;
   services.xserver.xkb.layout = "us";
+
+  # Remap keys before they reach either the console or Hyprland.
+  services.udev.extraHwdb = ''
+    # Framework built-in keyboard: Caps Lock -> Esc, left Alt -> Ctrl,
+    # left Super -> Alt, left Ctrl -> Super; swap right Alt and right Ctrl.
+    evdev:atkbd:dmi:bvn*:bvr*:bd*:svnFramework:pnLaptop13(AMDRyzenAI300Series):*
+     KEYBOARD_KEY_3a=esc
+     KEYBOARD_KEY_38=leftctrl
+     KEYBOARD_KEY_db=leftalt
+     KEYBOARD_KEY_1d=leftmeta
+     KEYBOARD_KEY_b8=rightctrl
+     KEYBOARD_KEY_9d=rightalt
+
+    # Apple Magic Keyboard: Caps Lock -> Esc, Command -> Ctrl; Option stays Alt.
+    evdev:input:b*v05ACp0320*
+     KEYBOARD_KEY_70039=esc
+     KEYBOARD_KEY_700e3=leftctrl
+     KEYBOARD_KEY_700e7=rightctrl
+  '';
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
