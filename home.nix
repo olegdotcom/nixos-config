@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   ...
 }:
@@ -90,6 +91,13 @@
         name = "Oleg Morfiyanets";
         email = "1759220+olegdotcom@users.noreply.github.com";
       };
+    };
+  };
+
+  programs.jujutsu = {
+    enable = true;
+    settings.user = {
+      inherit (config.programs.git.settings.user) name email;
     };
   };
 
