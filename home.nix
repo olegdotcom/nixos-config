@@ -30,6 +30,7 @@
     hyprlock
     hypridle
     foot
+    ghostty
     anyrun
     waybar
     hyprpaper
