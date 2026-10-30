@@ -49,7 +49,9 @@
   services.udev.extraHwdb = ''
     # Framework built-in keyboard: Caps Lock -> Esc, left Alt -> Ctrl,
     # left Super -> Alt, left Ctrl -> Super; swap right Alt and right Ctrl.
-    evdev:atkbd:dmi:bvn*:bvr*:bd*:svnFramework:pnLaptop13(AMDRyzenAI300Series):*
+    # udev replaces the DMI product name's parentheses with underscores.
+    # Match either spelling, including direct hwdb queries of the raw modalias.
+    evdev:atkbd:dmi:bvn*:bvr*:bd*:svnFramework:pnLaptop13?AMDRyzenAI300Series?:*
      KEYBOARD_KEY_3a=esc
      KEYBOARD_KEY_38=leftctrl
      KEYBOARD_KEY_db=leftalt

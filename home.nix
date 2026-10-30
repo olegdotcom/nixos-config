@@ -33,8 +33,6 @@
     ghostty
     anyrun
     waybar
-    hyprpaper
-    pyprland
     pavucontrol
     networkmanagerapplet
     hyprshot
@@ -127,7 +125,6 @@
   xdg.configFile = {
     "nvim".source = ./dotfiles/nvim;
     "hypr".source = ./dotfiles/hypr;
-    "pypr".source = ./dotfiles/pypr;
     "anyrun".source = ./dotfiles/anyrun;
     "bat".source = ./dotfiles/bat;
     "foot".source = ./dotfiles/foot;
