@@ -23,6 +23,8 @@ hl.monitor({
 hl.config({
   input = {
     kb_layout = "us",
+    repeat_delay = 300, -- Milliseconds before repeating (default: 600).
+    repeat_rate = 50,   -- Repeats per second (default: 25).
     follow_mouse = 1,
     touchpad = {
       natural_scroll = false,
