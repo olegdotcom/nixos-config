@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # Hyprland 0.57.0 and portal 1.5.0, packaged in nixpkgs ahead of nixos-unstable.
+    # TODO: Remove this input and the two package overrides below once our
+    # nixos-unstable pin includes Hyprland 0.57 or newer.
+    hyprland-nixpkgs.url = "github:NixOS/nixpkgs/2de5f15dcaa92e88bedf42ba49ffbf3ff04a76e4";
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +29,7 @@
   outputs =
     {
       nixpkgs,
+      hyprland-nixpkgs,
       disko,
       nixos-hardware,
       home-manager,
@@ -39,6 +45,10 @@
           ./configuration.nix
           home-manager.nixosModules.home-manager
           {
+            programs.hyprland.package = hyprland-nixpkgs.legacyPackages.x86_64-linux.hyprland;
+            programs.hyprland.portalPackage =
+              hyprland-nixpkgs.legacyPackages.x86_64-linux.xdg-desktop-portal-hyprland;
+
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";

@@ -40,6 +40,22 @@
         "type": "github"
       }
     },
+    "hyprland-nixpkgs": {
+      "locked": {
+        "lastModified": 1793388644,
+        "narHash": "sha256-OxidzIF861+P0Rovv5arLY+Cxn2zxWlmEpPfbO/6m1c=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2de5f15dcaa92e88bedf42ba49ffbf3ff04a76e4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2de5f15dcaa92e88bedf42ba49ffbf3ff04a76e4",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "inputs": {
         "nixpkgs": [
@@ -80,6 +96,7 @@
       "inputs": {
         "disko": "disko",
         "home-manager": "home-manager",
+        "hyprland-nixpkgs": "hyprland-nixpkgs",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
       }

@@ -121,7 +121,7 @@
     settings = {
       default_session = {
         command = ''
-          ${pkgs.tuigreet}/bin/tuigreet --cmd '${pkgs.hyprland}/bin/Hyprland'
+          ${pkgs.tuigreet}/bin/tuigreet --cmd '${config.programs.hyprland.package}/bin/Hyprland'
         '';
         user = "greeter";
       };

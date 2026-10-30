@@ -1,36 +1,19 @@
--- Native Hyprland config (0.55+). Home Manager deploys this directory as-is.
+-- Native Hyprland config (0.57+). Home Manager deploys this directory as-is.
 -- https://wiki.hypr.land/configuring/
 local main_mod = "ALT"
 
--- Let Hyprland arrange connected displays; retain the existing 2x scaling.
-hl.monitor({
-  output = "",
-  mode = "preferred",
-  position = "auto",
-  scale = 2,
-})
+-- Use the same defaults for every display. The lid handler needs an explicit
+-- panel rule so its partial updates retain the preferred mode and 2x scaling.
+for _, output in ipairs({ "", "eDP-1" }) do
+  hl.monitor({ output = output, mode = "preferred", position = "auto", scale = 2, disabled = false })
+end
 
--- Keep both origins stable across docking/lid changes: the laptop's logical
--- width is 1440, so an external starts at 0 even when the panel is disabled.
--- TODO: Use position = "auto" after Hyprland 0.57 fixes stale bars (#15842).
-hl.monitor({
-  output = "eDP-1",
-  mode = "preferred",
-  position = "-1440x0",
-  scale = 2,
-  disabled = false,
-})
-
--- Native clamshell handling for any external display. Hyprland moves the
--- windows; we only preserve the active workspace and correct the scaled cursor.
+-- Clamshell mode for any external display. Hyprland moves the workspaces;
+-- keep the current one selected and the pointer on it after disabling the panel.
 local panel_disabled, pending_workspace
 local function sync_clamshell()
-  local lid = io.open("/proc/acpi/button/lid/LID0/state", "r")
-  local closed = false
-  if lid then
-    closed = (lid:read(64) or ""):find("closed", 1, true) ~= nil
-    lid:close()
-  end
+  local lid <close> = io.open("/proc/acpi/button/lid/LID0/state", "r")
+  local closed = lid ~= nil and (lid:read(64) or ""):find("closed", 1, true) ~= nil
 
   local external = false
   for _, monitor in ipairs(hl.get_monitors()) do
@@ -54,9 +37,9 @@ local function sync_clamshell()
     if monitor and monitor.name ~= "FALLBACK" then
       pending_workspace = nil
       hl.dispatch(hl.dsp.focus({ workspace = workspace.id }))
-      local width, height = monitor.width / monitor.scale, monitor.height / monitor.scale
-      if monitor.transform % 2 == 1 then width, height = height, width end
-      hl.dispatch(hl.dsp.cursor.move({ x = monitor.x + width / 2, y = monitor.y + height / 2 }))
+      -- 0.57 exposes logical dimensions, including scaling and rotation.
+      local mode = monitor.mode
+      hl.dispatch(hl.dsp.cursor.move({ x = monitor.x + mode.width / 2, y = monitor.y + mode.height / 2 }))
     end
   end
 end
