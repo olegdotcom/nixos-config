@@ -225,8 +225,7 @@
     };
   };
 
-  # First NixOS version installed on this machine.
-  system.stateVersion = "25.05";
+  system.stateVersion = "26.11";
 
   # Prune system history by count, then collect unreferenced paths daily.
   nix.gc = {
