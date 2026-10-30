@@ -29,6 +29,7 @@
     # Hyprland itself is installed by programs.hyprland in configuration.nix.
     hyprlock
     hypridle
+    hyprsunset
     foot
     ghostty
     anyrun

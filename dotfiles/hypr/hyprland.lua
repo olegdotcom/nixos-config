@@ -8,6 +8,16 @@ for _, output in ipairs({ "", "eDP-1" }) do
   hl.monitor({ output = output, mode = "preferred", position = "auto", scale = 2, disabled = false })
 end
 
+-- Match the ASUS OSD's Display P3 preset, regardless of the dock's port name.
+hl.monitor({
+  output = "desc:ASUSTek COMPUTER INC PA32QCV",
+  mode = "preferred",
+  position = "auto",
+  scale = 2,
+  cm = "dp3",
+  sdr_eotf = "srgb",
+})
+
 -- Clamshell mode for any external display. Hyprland moves the workspaces;
 -- keep the current one selected and the pointer on it after disabling the panel.
 local panel_disabled, pending_workspace
@@ -78,6 +88,10 @@ hl.config({
   },
   decoration = { rounding = 5 },
   animations = { enabled = true },
+  render = {
+    -- Keep hyprsunset active for fullscreen photos, videos, and games too.
+    non_shader_cm_interop = 1,
+  },
   misc = {
     -- The old wallpaper.png was an exact copy of Hyprland's wall2.png.
     force_default_wallpaper = 2,
@@ -89,7 +103,7 @@ hl.config({
 
 -- Start once per session; reloading the config does not duplicate daemons.
 hl.on("hyprland.start", function()
-  for _, command in ipairs({ "waybar", "hypridle", "nm-applet" }) do
+  for _, command in ipairs({ "waybar", "hypridle", "hyprsunset", "nm-applet" }) do
     hl.exec_cmd(command)
   end
 end)

@@ -1,10 +1,7 @@
 return {
 	{
-		"neovim-treesitter/nvim-treesitter",
+		"nvim-treesitter/nvim-treesitter",
 		branch = "main",
-		dependencies = {
-			"neovim-treesitter/treesitter-parser-registry",
-		},
 		build = ":TSUpdate",
 		-- The plugin must configure its parser directory during startup.
 		lazy = false,
