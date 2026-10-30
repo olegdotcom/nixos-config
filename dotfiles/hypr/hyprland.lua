@@ -10,15 +10,62 @@ hl.monitor({
   scale = 2,
 })
 
--- TODO: Remove this after upgrading to Hyprland 0.57.
--- Keep the laptop's position stable across docking. Hyprland 0.56.2 can leave
--- bars at stale coordinates when outputs move (upstream fix: Hyprland #15842).
+-- Keep both origins stable across docking/lid changes: the laptop's logical
+-- width is 1440, so an external starts at 0 even when the panel is disabled.
+-- TODO: Use position = "auto" after Hyprland 0.57 fixes stale bars (#15842).
 hl.monitor({
   output = "eDP-1",
   mode = "preferred",
-  position = "0x0",
+  position = "-1440x0",
   scale = 2,
+  disabled = false,
 })
+
+-- Native clamshell handling for any external display. Hyprland moves the
+-- windows; we only preserve the active workspace and correct the scaled cursor.
+local panel_disabled, pending_workspace
+local function sync_clamshell()
+  local lid = io.open("/proc/acpi/button/lid/LID0/state", "r")
+  local closed = false
+  if lid then
+    closed = (lid:read(64) or ""):find("closed", 1, true) ~= nil
+    lid:close()
+  end
+
+  local external = false
+  for _, monitor in ipairs(hl.get_monitors()) do
+    if monitor.name ~= "eDP-1" and monitor.name ~= "FALLBACK" then
+      external = true
+      break
+    end
+  end
+  local disabled = closed and external
+  if disabled ~= panel_disabled then
+    panel_disabled = disabled
+    local workspace = hl.get_active_workspace()
+    pending_workspace = disabled and workspace and workspace.id or nil
+    hl.monitor({ output = "eDP-1", disabled = disabled })
+  end
+
+  -- Monitor changes are asynchronous; finish once the panel has been removed.
+  if pending_workspace and not hl.get_monitor("eDP-1") then
+    local workspace = hl.get_workspace(pending_workspace)
+    local monitor = workspace and workspace.monitor
+    if monitor and monitor.name ~= "FALLBACK" then
+      pending_workspace = nil
+      hl.dispatch(hl.dsp.focus({ workspace = workspace.id }))
+      local width, height = monitor.width / monitor.scale, monitor.height / monitor.scale
+      if monitor.transform % 2 == 1 then width, height = height, width end
+      hl.dispatch(hl.dsp.cursor.move({ x = monitor.x + width / 2, y = monitor.y + height / 2 }))
+    end
+  end
+end
+
+hl.bind("switch:on:Lid Switch", sync_clamshell, { locked = true })
+hl.bind("switch:off:Lid Switch", sync_clamshell, { locked = true })
+for _, event in ipairs({ "hyprland.start", "config.reloaded", "monitor.layout_changed" }) do
+  hl.on(event, sync_clamshell)
+end
 
 hl.config({
   input = {
