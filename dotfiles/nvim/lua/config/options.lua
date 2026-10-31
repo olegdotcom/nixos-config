@@ -12,7 +12,8 @@ vim.o.scrolloff = 10
 vim.o.sidescrolloff = 10
 
 vim.o.conceallevel = 2
-vim.o.concealcursor = "nc"
+-- Always reveal concealed syntax on the cursor line, in every mode.
+vim.o.concealcursor = ""
 
 vim.o.cmdheight = 0
 
