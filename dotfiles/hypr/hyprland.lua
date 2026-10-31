@@ -2,80 +2,40 @@
 -- https://wiki.hypr.land/configuring/
 local main_mod = "ALT"
 
--- Use the same defaults for every display. The lid handler needs an explicit
--- panel rule so its partial updates retain the preferred mode and 2x scaling.
+-- Use 2x scaling for every display. The lid bindings need an explicit panel
+-- rule because partial updates do not inherit the fallback rule's scale.
 for _, output in ipairs({ "", "eDP-1" }) do
-  hl.monitor({ output = output, mode = "preferred", position = "auto", scale = 2, disabled = false })
+  hl.monitor({ output = output, scale = 2 })
 end
 
 -- Match the ASUS OSD's Display P3 preset, regardless of the dock's port name.
 hl.monitor({
   output = "desc:ASUSTek COMPUTER INC PA32QCV",
-  mode = "preferred",
-  position = "auto",
   scale = 2,
   cm = "dp3",
-  sdr_eotf = "srgb",
 })
 
--- Clamshell mode for any external display. Hyprland moves the workspaces;
--- keep the current one selected and the pointer on it after disabling the panel.
-local panel_disabled, pending_workspace
-local function sync_clamshell()
-  local lid <close> = io.open("/proc/acpi/button/lid/LID0/state", "r")
-  local closed = lid ~= nil and (lid:read(64) or ""):find("closed", 1, true) ~= nil
-
-  local external = false
-  for _, monitor in ipairs(hl.get_monitors()) do
-    if monitor.name ~= "eDP-1" and monitor.name ~= "FALLBACK" then
-      external = true
-      break
-    end
-  end
-  local disabled = closed and external
-  if disabled ~= panel_disabled then
-    panel_disabled = disabled
-    local workspace = hl.get_active_workspace()
-    pending_workspace = disabled and workspace and workspace.id or nil
-    hl.monitor({ output = "eDP-1", disabled = disabled })
-  end
-
-  -- Monitor changes are asynchronous; finish once the panel has been removed.
-  if pending_workspace and not hl.get_monitor("eDP-1") then
-    local workspace = hl.get_workspace(pending_workspace)
-    local monitor = workspace and workspace.monitor
-    if monitor and monitor.name ~= "FALLBACK" then
-      pending_workspace = nil
-      hl.dispatch(hl.dsp.focus({ workspace = workspace.id }))
-      -- 0.57 exposes logical dimensions, including scaling and rotation.
-      local mode = monitor.mode
-      hl.dispatch(hl.dsp.cursor.move({ x = monitor.x + mode.width / 2, y = monitor.y + mode.height / 2 }))
-    end
-  end
-end
-
-hl.bind("switch:on:Lid Switch", sync_clamshell, { locked = true })
-hl.bind("switch:off:Lid Switch", sync_clamshell, { locked = true })
-for _, event in ipairs({ "hyprland.start", "config.reloaded", "monitor.layout_changed" }) do
-  hl.on(event, sync_clamshell)
-end
+-- Disable the panel on lid close and enable it on lid open.
+-- https://wiki.hypr.land/configuring/core/binds/switches/
+hl.bind("switch:on:Lid Switch", function()
+  hl.monitor({ output = "eDP-1", disabled = true })
+end, { locked = true })
+hl.bind("switch:off:Lid Switch", function()
+  hl.monitor({ output = "eDP-1", disabled = false })
+end, { locked = true })
 
 hl.config({
   input = {
-    kb_layout = "us",
     repeat_delay = 300, -- Milliseconds before repeating (default: 600).
     repeat_rate = 50,   -- Repeats per second (default: 25).
-    follow_mouse = 1,
     touchpad = {
-      natural_scroll = false,
       scroll_factor = 0.2,
       clickfinger_behavior = true,
       tap_to_click = false,
     },
   },
   general = {
-    gaps_in = 5,
-    gaps_out = 10,
+    gaps_out = 5,
     border_size = 2,
     col = {
       active_border = {
@@ -84,10 +44,9 @@ hl.config({
       },
       inactive_border = "rgba(595959aa)",
     },
-    layout = "dwindle",
   },
   decoration = { rounding = 5 },
-  animations = { enabled = true },
+  animations = { enabled = false },
   render = {
     -- Keep hyprsunset active for fullscreen photos, videos, and games too.
     non_shader_cm_interop = 1,
@@ -107,15 +66,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd(command)
   end
 end)
-
-hl.curve("window_ease", {
-  type = "bezier",
-  points = { { 0.05, 0.9 }, { 0.1, 1.05 } },
-})
-hl.animation({ leaf = "windows", enabled = true, speed = 7, bezier = "window_ease" })
-hl.animation({ leaf = "border", enabled = true, speed = 10, bezier = "default" })
-hl.animation({ leaf = "fade", enabled = true, speed = 7, bezier = "default" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 6, bezier = "default" })
 
 -- Three-finger Back/Forward navigation on both trackpads.
 for _, direction in ipairs({ "left", "right" }) do
