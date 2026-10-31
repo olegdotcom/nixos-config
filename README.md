@@ -181,7 +181,7 @@ reboot
 
 Remove the installer during reboot. The configuration still targets the AMD
 Ryzen AI 300 Framework; do not reuse this hardware module unchanged for the
-Intel backup laptop. Restore personal data, SMB credentials, and any keys
+Intel backup laptop. Restore personal data, and any keys
 separately. The repository itself does not contain them.
 
 ### Verify hibernation
@@ -247,18 +247,6 @@ To roll back the active system:
 ```sh
 sudo nixos-rebuild switch --rollback
 ```
-
-## SMB shares
-
-The NAS is configured at `192.168.10.12`, with the local alias `nas.local`.
-Create the root-owned credentials file and mount-point directories once:
-
-```sh
-./scripts/setup-smb-share.sh
-```
-
-The credentials file is stored at `/etc/nixos/smb-credentials` and is not
-tracked by Git.
 
 ## Fastfetch
 

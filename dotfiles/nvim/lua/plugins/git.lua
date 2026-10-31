@@ -1,9 +1,9 @@
 return {
-	{ "lewis6991/gitsigns.nvim" },
-	{
-		"sindrets/diffview.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
-		config = true,
-	},
+  { "lewis6991/gitsigns.nvim" },
+  {
+    "sindrets/diffview.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
+    config = true,
+  },
 }

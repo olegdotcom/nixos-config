@@ -108,19 +108,6 @@
     VISUAL = "nvim";
   };
 
-  # Retain the greetd configuration for future use; the service is disabled.
-  services.greetd = {
-    enable = false;
-    settings = {
-      default_session = {
-        command = ''
-          ${pkgs.tuigreet}/bin/tuigreet --cmd '${config.programs.hyprland.package}/bin/Hyprland'
-        '';
-        user = "greeter";
-      };
-    };
-  };
-
   users.users.oleg = {
     isNormalUser = true;
     home = "/home/oleg";
@@ -142,41 +129,14 @@
   nixpkgs.config.allowUnfree = true;
 
   # User applications live in Home Manager; keep only system-level tools here.
-  # Neovim remains system-wide for root, and Tuigreet supports the retained
-  # greetd configuration.
+  # Neovim remains system-wide for root.
   environment.systemPackages = with pkgs; [
     neovim
     wget
     git
-    tuigreet
     nushell
     cifs-utils
   ];
-
-  fileSystems =
-    let
-      cifsOptions = [
-        "credentials=/etc/nixos/smb-credentials"
-        "uid=${toString config.users.users.oleg.uid}"
-        "gid=${toString config.users.groups.users.gid}"
-        "user"
-        "users"
-        "x-systemd.automount"
-        "x-systemd.idle-timeout=1min"
-        "x-systemd.mount-timeout=10s"
-        "noauto"
-      ];
-      mkCifsMount = share: {
-        device = "//nas.local/${share}";
-        fsType = "cifs";
-        options = cifsOptions;
-      };
-    in
-    {
-      "/mnt/nas/core" = mkCifsMount "core";
-      "/mnt/nas/dump" = mkCifsMount "dump";
-      "/mnt/nas/photos" = mkCifsMount "photos";
-    };
 
   services.syncthing = {
     enable = true;
