@@ -7,9 +7,9 @@
 }
 
 window#waybar {
-    background: rgba(43, 48, 59, 0.5);
-    color: #D8DEE9;
-    border-radius: 12px;
+  background: #000000;
+  color: #D8DEE9;
+  border-radius: 12px;
 }
 
 #workspaces {

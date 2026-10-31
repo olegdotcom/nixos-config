@@ -79,7 +79,7 @@
     bolt
     bluetui
 
-    chromium
+    (chromium.override { enableWideVine = true; })
   ];
 
   home.stateVersion = "26.11";
