@@ -52,8 +52,7 @@ hl.config({
     non_shader_cm_interop = 1,
   },
   misc = {
-    -- The old wallpaper.png was an exact copy of Hyprland's wall2.png.
-    force_default_wallpaper = 2,
+    disable_hyprland_logo = true,
     disable_splash_rendering = true,
     -- Adaptive sync for fullscreen windows (1 would enable it always).
     vrr = 2,
@@ -62,7 +61,7 @@ hl.config({
 
 -- Start once per session; reloading the config does not duplicate daemons.
 hl.on("hyprland.start", function()
-  for _, command in ipairs({ "waybar", "hypridle", "hyprsunset", "nm-applet" }) do
+  for _, command in ipairs({ "waybar", "hypridle", "hyprpaper", "hyprsunset", "nm-applet" }) do
     hl.exec_cmd(command)
   end
 end)
