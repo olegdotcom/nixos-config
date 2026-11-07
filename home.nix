@@ -78,13 +78,40 @@
     brightnessctl
     bolt
     bluetui
-
-    (chromium.override { enableWideVine = true; })
   ];
 
   home.stateVersion = "26.11";
 
   programs.home-manager.enable = true;
+
+  programs.chromium = {
+    enable = true;
+    package = pkgs.chromium.override { enableWideVine = true; };
+    extensions = [
+      { id = "dpjamkmjmigaoobjbekmfgabipmfilij"; } # Empty New Tab Page
+      { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
+      { id = "ddkjiahejlhfcafbddmgiahcphecmpfh"; } # uBlock Origin Lite
+      { id = "khncfooichmfjbepaaaebmommgaepoid"; } # Unhook
+    ];
+  };
+
+  programs.firefox = {
+    enable = true;
+    policies.ExtensionSettings = {
+      "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+        installation_mode = "normal_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+      };
+      "uBlock0@raymondhill.net" = {
+        installation_mode = "normal_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+      };
+      "myallychou@gmail.com" = {
+        installation_mode = "normal_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/youtube-recommended-videos/latest.xpi";
+      };
+    };
+  };
 
   programs.git = {
     enable = true;
