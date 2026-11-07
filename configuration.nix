@@ -70,6 +70,8 @@
 
   services.hardware.bolt.enable = true;
 
+  programs.yubikey-manager.enable = true;
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;

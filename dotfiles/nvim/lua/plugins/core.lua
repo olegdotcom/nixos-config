@@ -24,19 +24,7 @@ return {
         winopts = {
           backdrop = 100,
           border = "single",
-          -- Keep syntax colors without fzf's reverse-video match highlights.
-          treesitter = { fzf_colors = false },
           preview = { border = "single" },
-        },
-        fzf_colors = {
-          true,
-          bg = { "bg", "Normal" },
-          ["bg+"] = { "bg", "Normal" },
-          gutter = { "bg", "Normal" },
-          ["preview-bg"] = { "bg", "Normal" },
-          ["fg+"] = { "fg", "Directory", "bold" },
-          hl = { "fg", "Statement", "bold", "underline" },
-          ["hl+"] = { "fg", "Statement", "bold", "underline" },
         },
       })
     end,

@@ -24,12 +24,12 @@ return {
 				numhl = "",
 			})
 
-			vim.fn.sign_define("DapStopped", {
-				text = "🟢",
-				texthl = "DapStopped",
-				linehl = "Visual",
-				numhl = "",
-			})
+      vim.fn.sign_define("DapStopped", {
+        text = "🟢",
+        texthl = "DapStopped",
+        linehl = "Visual",
+        numhl = "",
+      })
 		end,
 	},
 
