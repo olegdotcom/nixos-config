@@ -48,6 +48,7 @@
     lua-language-server
     gopls
     llvmPackages.clang
+    live-server
     # Debug adapters used by the Neovim DAP configuration.
     delve
     nodejs

@@ -19,6 +19,26 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   powerManagement.enable = true;
+  # Logind handles lid events; hypridle handles inactivity in the desktop session.
+  services.logind.settings.Login = {
+    # Closing the lid on battery uses SleepOperation below, unless docked.
+    HandleLidSwitch = "sleep";
+    # Stay awake with the lid closed on external power, even if displays turn off.
+    HandleLidSwitchExternalPower = "ignore";
+    # Also ignore the lid when logind detects a dock or active external display.
+    HandleLidSwitchDocked = "ignore";
+    # Avoid a second idle timer competing with hypridle's battery-only timer.
+    IdleAction = "ignore";
+    # Both the lid's "sleep" action and `systemctl sleep` use this operation.
+    SleepOperation = "suspend-then-hibernate";
+  };
+  # Control when suspend-then-hibernate saves the session to disk and powers down.
+  systemd.sleep.settings.Sleep = {
+    # Hibernate after one hour suspended on battery, or sooner on low battery.
+    HibernateDelaySec = "1h";
+    # Stay suspended on AC; start the hibernation countdown after unplugging.
+    HibernateOnACPower = false;
+  };
   # Waybar uses this service to display and change power profiles.
   services.power-profiles-daemon.enable = true;
 

@@ -88,7 +88,8 @@ hl.bind(main_mod .. " + Q", hl.dsp.window.close())
 hl.bind(main_mod .. " + SHIFT + Q", hl.dsp.exit())
 -- Use hypridle's guarded lock command, just like idle and suspend locking.
 hl.bind(main_mod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
-hl.bind(main_mod .. " + SHIFT + L", hl.dsp.exec_cmd("systemctl suspend"))
+-- Use logind's SleepOperation: suspend first, then hibernate after its delay.
+hl.bind(main_mod .. " + SHIFT + L", hl.dsp.exec_cmd("systemctl sleep"))
 hl.bind(main_mod .. " + P", hl.dsp.exec_cmd("hyprshot -m region -o ~/screenshots"))
 
 -- Holding volume/brightness keys repeats; these also work while locked.
