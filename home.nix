@@ -116,17 +116,42 @@
   programs.git = {
     enable = true;
     settings = {
+      core.editor = "nvim";
       user = {
         name = "Oleg Morfiyanets";
-        email = "1759220+olegdotcom@users.noreply.github.com";
+        email = "hi@oleg.com";
+        signingKey = "${config.home.homeDirectory}/.ssh/id_ed25519_sk_yk1";
       };
+      gpg = {
+        format = "ssh";
+        ssh.allowedSignersFile = "${config.xdg.configHome}/git/allowed_signers";
+      };
+      commit.gpgSign = true;
     };
   };
 
+  # Public keys for all three YubiKeys; private key handles stay in ~/.ssh.
+  xdg.configFile."git/allowed_signers".text = ''
+    hi@oleg.com namespaces="git" sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIB+xvMQc0uz6Xu/IX6qFUf2JDCtjGrVuJo7cPK2YVtMOAAAABHNzaDo=
+    hi@oleg.com namespaces="git" sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJ17zgK3Zadm/WF2fhoGAKIhy0YH2/DGH8VRiGjkvz+jAAAABHNzaDo=
+    hi@oleg.com namespaces="git" sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIB1VDE+L+l7JoT8SeTPC59khM9C2/YNoRPDP70c+3yydAAAABHNzaDo=
+  '';
+
   programs.jujutsu = {
     enable = true;
-    settings.user = {
-      inherit (config.programs.git.settings.user) name email;
+    settings = {
+      ui.editor = "nvim";
+      user = {
+        inherit (config.programs.git.settings.user) name email;
+      };
+      signing = {
+        backend = "ssh";
+        key = config.programs.git.settings.user.signingKey;
+        behavior = "drop";
+        backends.ssh.allowed-signers = config.programs.git.settings.gpg.ssh.allowedSignersFile;
+      };
+      # Defer YubiKey interaction until push instead of signing every rewrite.
+      git.sign-on-push = true;
     };
   };
 
