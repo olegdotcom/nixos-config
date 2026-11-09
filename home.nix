@@ -8,6 +8,9 @@
   home.username = "oleg";
   home.homeDirectory = "/home/oleg";
 
+  # Read SSH passphrases and YubiKey PINs in the terminal, including during jj signing.
+  home.sessionVariables.SSH_ASKPASS_REQUIRE = "never";
+
   home.packages = with pkgs; [
     # Core
     fastfetch

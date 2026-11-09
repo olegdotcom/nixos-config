@@ -92,6 +92,26 @@
 
   programs.yubikey-manager.enable = true;
 
+  # Any enrolled YubiKey can replace the account password for these services.
+  # Keep U2F opt-in per service so it is not added to unrelated PAM stacks.
+  security.pam = {
+    u2f = {
+      control = "sufficient";
+      settings = {
+        authfile = "/etc/u2f-mappings";
+        origin = "pam://oleg-laptop";
+        cue = true;
+        userpresence = 1;
+        pinverification = 1;
+      };
+    };
+    services = {
+      login.u2f.enable = true;
+      hyprlock.u2f.enable = true;
+      sudo.u2f.enable = true;
+    };
+  };
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
@@ -157,6 +177,7 @@
     wget
     git
     nushell
+    pam_u2f # pamu2fcfg enrolls the keys used by the PAM services above.
     cifs-utils
   ];
 
